@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="fa">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>سانس‌چی | پروفایل من</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/profile.css" />
+    <link rel="stylesheet" href="../assets/css/responsive.css" />
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <header class="header">
+      <div class="logo">
+        <a href="./index.html"><span class="logo-dot"></span>سانس‌چی</a>
+      </div>
+      <ul class="nav">
+        <li><a href="./index.html">خانه</a></li>
+        <li><a href="./gallery.html">زمین‌ها</a></li>
+        <li><a href="./reserve.html">رزرو</a></li>
+        <li><a href="./about.html">درباره ما</a></li>
+      </ul>
+      <button class="btn-logout" onclick="logout()">خروج از حساب ←</button>
+    </header>
+
+    <!-- PAGE HERO -->
+    <div class="page-hero">
+      <div class="sec-eyebrow"><span></span>حساب کاربری</div>
+      <h1>سلام، <em id="heroName">کاربر</em> 👋</h1>
+      <p>اطلاعات حسابت رو ویرایش کن و رزروهات رو از همینجا مدیریت کن.</p>
+    </div>
+
+    <!-- MAIN -->
+    <main class="profile-main">
+      <!-- PROFILE CARD -->
+      <div class="profile-card">
+        <div class="avatar" id="avatarLetter">?</div>
+        <div class="profile-name" id="pName">—</div>
+        <span class="profile-role" id="pRole">کاربر</span>
+
+        <!-- VIEW MODE -->
+        <div class="info-list" id="infoView">
+          <div class="info-row">
+            <span class="il">شماره موبایل</span>
+            <span class="iv ltr" id="pPhone">—</span>
+          </div>
+          <div class="info-row">
+            <span class="il">ایمیل</span>
+            <span class="iv ltr" id="pEmail">—</span>
+          </div>
+        </div>
+
+        <!-- EDIT MODE -->
+        <div class="edit-form" id="editForm">
+          <div class="fg">
+            <label>نام و نام خانوادگی</label>
+            <input type="text" id="editName" placeholder="نام کامل" />
+          </div>
+          <div class="fg">
+            <label>ایمیل</label>
+            <input
+              type="email"
+              id="editEmail"
+              placeholder="example@email.com"
+              style="direction: ltr; text-align: right"
+            />
+          </div>
+          <div class="fg">
+            <label>شماره موبایل</label>
+            <input
+              type="text"
+              id="editPhone"
+              disabled
+              style="direction: ltr; text-align: right"
+            />
+          </div>
+        </div>
+
+        <div class="profile-actions">
+          <button class="btn-edit" id="editToggleBtn" onclick="toggleEdit()">
+            ✏️ ویرایش اطلاعات
+          </button>
+          <div
+            id="editActions"
+            style="display: none; flex-direction: column; gap: 10px"
+          >
+            <button class="btn-save" id="saveBtn" onclick="saveProfile()">
+              <div class="mini-spinner"></div>
+              <span class="btn-label">ذخیره تغییرات</span>
+            </button>
+            <button class="btn-cancel-edit" onclick="toggleEdit()">
+              انصراف
+            </button>
+          </div>
+        </div>
+        <div class="save-msg" id="saveMsg"></div>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="right-col">
+        <!-- STATS -->
+        <div class="stats-row">
+          <div class="stat-box">
+            <h3 id="statTotal">۰</h3>
+            <p>کل رزروها</p>
+          </div>
+          <div class="stat-box">
+            <h3 id="statPaid">۰</h3>
+            <p>پرداخت‌شده</p>
+          </div>
+          <div class="stat-box">
+            <h3 id="statPending">۰</h3>
+            <p>در انتظار پرداخت</p>
+          </div>
+          <div class="stat-box">
+            <h3 id="statCancelled">۰</h3>
+            <p>لغو شده</p>
+          </div>
+        </div>
+
+        <!-- OWNER PANEL LINK -->
+        <div
+          style="
+            background: var(--bg-card);
+            border: 1px solid var(--green-border);
+            border-radius: 18px;
+            padding: 26px;
+            margin-bottom: 20px;
+          "
+        >
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              flex-wrap: wrap;
+              gap: 12px;
+            "
+          >
+            <div>
+              <div
+                style="font-size: 17px; font-weight: 800; margin-bottom: 4px"
+              >
+                👤 پنل صاحب زمین
+              </div>
+              <div style="font-size: 13px; color: var(--text-body)">
+                اگر صاحب یک یا چند زمین هستید، از اینجا وارد پنل مدیریت شوید
+              </div>
+            </div>
+            <a
+              href="./owner.html"
+              style="
+                padding: 10px 24px;
+                background: var(--green);
+                color: #04100a;
+                border: none;
+                border-radius: 10px;
+                font-family: inherit;
+                font-size: 14px;
+                font-weight: 700;
+                cursor: pointer;
+                text-decoration: none;
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+              "
+              >🚀 ورود به پنل صاحب زمین</a
+            >
+          </div>
+        </div>
+
+        <!-- RESERVATIONS -->
+        <div class="res-section">
+          <div class="res-section-title">📋 رزروهای من</div>
+          <div class="res-section-sub">
+            تاریخچه‌ی همه‌ی سانس‌هایی که رزرو کردی
+          </div>
+          <div class="res-list" id="resList">
+            <div class="res-loading">
+              <div class="res-loading-spinner"></div>
+              در حال بارگذاری رزروها...
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>© ۱۴۰۵ تمامی حقوق متعلق به <span>سانس‌چی</span> است.</p>
+    </footer>
+
+    <script src="../assets/js/profile.js"></script>
+  </body>
+</html>

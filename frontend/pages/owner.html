@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="fa">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>سانس‌چی | پنل صاحب زمین</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/owner.css" />
+    <link rel="stylesheet" href="../assets/css/responsive.css" />
+  </head>
+  <body>
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="topbar-logo">
+        <div class="logo-dot"></div>
+        سانس‌چی
+        <span class="topbar-badge">پنل صاحب زمین</span>
+      </div>
+      <div class="topbar-actions" id="topbarActions">
+        <span class="owner-name" id="ownerNameTop"></span>
+        <a
+          href="./finance.html"
+          class="logout-btn owner-only-btn"
+          style="
+            display: none;
+            text-decoration: none;
+            color: var(--green);
+            border-color: rgba(34, 197, 94, 0.4);
+          "
+          >💰 داشبورد مالی</a
+        >
+        <a
+          href="./settlement.html"
+          class="logout-btn owner-only-btn"
+          style="
+            display: none;
+            text-decoration: none;
+            color: var(--body);
+            border-color: var(--border);
+          "
+          >🏦 تسویه‌ها</a
+        >
+        <button
+          class="logout-btn owner-only-btn"
+          onclick="window.location.href = './settlement.html'"
+          style="
+            display: none;
+            color: var(--amber);
+            border-color: rgba(245, 158, 11, 0.4);
+          "
+        >
+          📤 درخواست تسویه
+        </button>
+        <button class="logout-btn" onclick="ownerLogout()">خروج</button>
+      </div>
+    </div>
+
+    <!-- ═══ LOGIN VIEW ═══ -->
+    <div class="view" id="view-login">
+      <div class="login-card">
+        <div class="login-head">
+          <div class="li">🔑</div>
+          <h1>ورود صاحب زمین</h1>
+          <p>
+            با همون حساب کاربری سایت وارد شو — اگه زمینی به حسابت متصل باشه،
+            مستقیم می‌ری تو پنل مدیریتش.
+          </p>
+        </div>
+
+        <div class="method-tabs">
+          <button
+            class="method-tab active"
+            id="tab-phone"
+            onclick="setLoginMethod('phone')"
+          >
+            📱 موبایل
+          </button>
+          <button
+            class="method-tab"
+            id="tab-email"
+            onclick="setLoginMethod('email')"
+          >
+            ✉️ ایمیل
+          </button>
+        </div>
+
+        <!-- PHONE + OTP -->
+        <div id="flow-phone">
+          <div class="fg">
+            <label>شماره موبایل</label>
+            <div class="phone-row">
+              <input
+                type="tel"
+                id="ownerPhone"
+                placeholder="09123456789"
+                style="direction: ltr; text-align: right"
+                inputmode="numeric"
+              />
+              <button
+                class="send-otp-btn"
+                id="sendOtpBtn"
+                onclick="ownerSendOTP()"
+              >
+                ارسال رمز
+              </button>
+            </div>
+            <div class="err-msg" id="ownerPhoneErr">
+              شماره موبایل معتبر نیست
+            </div>
+          </div>
+          <div id="otpBlock" style="display: none">
+            <div class="fg">
+              <label>رمز یک‌بار مصرف</label>
+              <div class="otp-row" id="otpRow">
+                <input class="otp-cell" maxlength="1" inputmode="numeric" />
+                <input class="otp-cell" maxlength="1" inputmode="numeric" />
+                <input class="otp-cell" maxlength="1" inputmode="numeric" />
+                <input class="otp-cell" maxlength="1" inputmode="numeric" />
+              </div>
+              <div class="otp-hint" id="otpCountdown">
+                ارسال مجدد پس از <strong id="otpSec">۶۰</strong> ثانیه
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- EMAIL + PASSWORD -->
+        <div id="flow-email" style="display: none">
+          <div class="fg">
+            <label>ایمیل</label>
+            <input
+              type="email"
+              id="ownerEmail"
+              placeholder="example@email.com"
+              style="direction: ltr; text-align: right"
+            />
+          </div>
+          <div class="fg">
+            <label>رمز عبور</label>
+            <input type="password" id="ownerPass" placeholder="رمز عبور" />
+            <div class="err-msg" id="ownerLoginErr"></div>
+          </div>
+        </div>
+
+        <button
+          class="login-submit"
+          id="ownerLoginBtn"
+          onclick="doOwnerLogin()"
+        >
+          <div class="mini-spinner"></div>
+          <span class="btn-label">ورود به پنل</span>
+        </button>
+
+        <p class="login-note">
+          هنوز حساب نداری؟ اول از
+          <a
+            href="./login.html"
+            style="color: var(--green); font-weight: 700; text-decoration: none"
+            >صفحه ورود سایت</a
+          >
+          ثبت‌نام کن، بعد از ادمین بخواه زمینت رو به حسابت وصل کنه.
+        </p>
+      </div>
+    </div>
+
+    <!-- ═══ EMPTY VIEW ═══ -->
+    <div class="view" id="view-empty">
+      <div class="empty-box">
+        <div class="ei">🏟️</div>
+        <h2>هنوز زمینی به این حساب متصل نیست</h2>
+        <p>
+          این حساب وارد شده، ولی هیچ زمینی روی نام تو ثبت نشده. از ادمین سانس‌چی
+          بخواه زمینت رو به همین شماره/ایمیل وصل کنه.
+        </p>
+        <button class="logout-btn" onclick="ownerLogout()">خروج از حساب</button>
+      </div>
+    </div>
+
+    <!-- ═══ PANEL VIEW ═══ -->
+    <div class="view" id="view-panel">
+      <div class="pitch-switcher" id="pitchSwitcher"></div>
+
+      <div class="pitch-head">
+        <div class="pitch-head-left">
+          <div class="pitch-thumb" id="pitchThumb">🏟️</div>
+          <div>
+            <h2 id="pitchHeadName">—</h2>
+            <div class="sub" id="pitchHeadSub">—</div>
+          </div>
+        </div>
+        <div class="active-toggle-wrap">
+          <span>زمین فعال</span>
+          <button
+            class="toggle-switch"
+            id="activeToggle"
+            onclick="toggleActive()"
+          ></button>
+        </div>
+      </div>
+
+      <div class="save-bar">
+        <button class="save-btn" onclick="savePitch()">✓ ذخیره تغییرات</button>
+        <span class="save-status" id="saveStatus"
+          ><span class="dot"></span
+          ><span id="saveStatusText">همه تغییرات ذخیره شده</span></span
+        >
+      </div>
+
+      <div class="panel-grid">
+        <!-- اطلاعات پایه -->
+        <div class="box">
+          <div class="box-title">📋 اطلاعات زمین</div>
+
+          <div
+            class="img-upload"
+            id="imgUpload"
+            onclick="document.getElementById('imgInput').click()"
+          >
+            <img id="imgPreview" style="display: none" />
+            <span class="ph" id="imgPlaceholder"
+              >📷 کلیک کن و عکس زمین رو آپلود کن<br /><span style="opacity: 0.7"
+                >حداکثر ۴ مگابایت</span
+              ></span
+            >
+          </div>
+          <input
+            type="file"
+            id="imgInput"
+            accept="image/*"
+            style="display: none"
+            onchange="handleImage(event)"
+          />
+
+          <div class="cfg-row">
+            <label>نام زمین</label>
+            <input class="cfg-input" id="inpName" oninput="markDirty()" />
+          </div>
+          <div class="cfg-row cfg-row-inline">
+            <div>
+              <label>نوع</label>
+              <select class="cfg-input" id="inpType" onchange="markDirty()">
+                <option value="futsal">فوتسال</option>
+                <option value="grass">چمن</option>
+              </select>
+            </div>
+            <div>
+              <label>ظرفیت</label>
+              <select class="cfg-input" id="inpSize" onchange="markDirty()">
+                <option value="5">۵ نفره</option>
+                <option value="7">۷ نفره</option>
+                <option value="11">۱۱ نفره</option>
+              </select>
+            </div>
+          </div>
+          <div class="cfg-row">
+            <label>قیمت پایه (تومان، برای نمایش روی کارت)</label>
+            <input
+              class="cfg-input"
+              type="number"
+              id="inpPrice"
+              step="10000"
+              oninput="markDirty()"
+            />
+          </div>
+          <div class="cfg-row">
+            <label>آدرس</label>
+            <input class="cfg-input" id="inpAddress" oninput="markDirty()" />
+          </div>
+          <div class="cfg-row">
+            <label>توضیحات</label>
+            <input class="cfg-input" id="inpDesc" oninput="markDirty()" />
+          </div>
+          <div class="cfg-row">
+            <label>تگ‌ها (با کاما جدا کن)</label>
+            <input class="cfg-input" id="inpTags" oninput="markDirty()" />
+          </div>
+        </div>
+
+        <!-- سانس‌ها و قیمت‌ها -->
+        <div class="box">
+          <div class="box-title">⏰ سانس‌ها و قیمت‌ها</div>
+
+          <div class="bulk-row">
+            <div class="bulk-grp">
+              <label>بازه</label>
+              <select class="bulk-sel" id="bulkPeriod">
+                <option value="morning">صبح و ظهر (۱–۷)</option>
+                <option value="evening">عصر و شب (۸–۱۱)</option>
+                <option value="all">همه سانس‌ها</option>
+              </select>
+            </div>
+            <div class="bulk-grp">
+              <label>قیمت جدید</label>
+              <input
+                type="number"
+                class="bulk-inp"
+                id="bulkPrice"
+                value="550000"
+                step="10000"
+              />
+            </div>
+            <button class="bulk-apply" onclick="applyBulkPrice()">اعمال</button>
+          </div>
+
+          <table class="slots-table">
+            <thead>
+              <tr>
+                <th style="width: 30px">#</th>
+                <th>بازه زمانی</th>
+                <th>قیمت</th>
+                <th style="width: 80px">وضعیت</th>
+              </tr>
+            </thead>
+            <tbody id="slotsBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- رزروها -->
+      <!-- REVENUE SECTION -->
+      <div class="res-section" style="margin-bottom: 20px">
+        <div class="box-title">💰 درآمد و آمار</div>
+        <div class="bulk-row" style="margin-top: 14px; margin-bottom: 16px">
+          <div class="bulk-grp">
+            <label>بازه زمانی</label>
+            <select
+              class="bulk-sel"
+              id="ownerRevPeriod"
+              onchange="renderOwnerRevenue()"
+            >
+              <option value="all">همه زمان‌ها</option>
+              <option value="day">امروز</option>
+              <option value="week">این هفته</option>
+              <option value="month">این ماه</option>
+              <option value="year">این سال</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- ── خلاصه مالی ── -->
+        <div
+          style="
+            background: rgba(34, 197, 94, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+          "
+          id="ownerFinSummary"
+        >
+          <div
+            style="
+              font-size: 11px;
+              font-weight: 700;
+              color: var(--muted);
+              letter-spacing: 0.5px;
+              margin-bottom: 12px;
+            "
+          >
+            📊 خلاصه مالی دوره انتخابی
+          </div>
+          <div
+            style="
+              display: flex;
+              align-items: stretch;
+              gap: 0;
+              border: 1px solid var(--border);
+              border-radius: 10px;
+              overflow: hidden;
+            "
+          >
+            <div
+              style="
+                flex: 1;
+                padding: 14px 16px;
+                text-align: center;
+                border-left: 1px solid var(--border);
+              "
+            >
+              <div
+                style="
+                  font-size: 10px;
+                  color: var(--muted);
+                  font-weight: 700;
+                  margin-bottom: 6px;
+                "
+              >
+                💵 کل دریافتی از مشتری
+              </div>
+              <div
+                style="font-size: 18px; font-weight: 900; color: var(--text)"
+                id="oGross"
+              >
+                ۰
+              </div>
+              <div style="font-size: 10px; color: var(--muted)">تومان</div>
+            </div>
+            <div
+              style="
+                flex: 1;
+                padding: 14px 16px;
+                text-align: center;
+                border-left: 1px solid var(--border);
+                background: rgba(239, 68, 68, 0.04);
+              "
+            >
+              <div
+                style="
+                  font-size: 10px;
+                  color: var(--muted);
+                  font-weight: 700;
+                  margin-bottom: 6px;
+                "
+              >
+                🏷️ کمیسیون سانس‌چی
+              </div>
+              <div
+                style="font-size: 18px; font-weight: 900; color: var(--red)"
+                id="oCommission"
+              >
+                ۰
+              </div>
+              <div
+                style="font-size: 10px; color: var(--muted)"
+                id="oCommissionSub"
+              >
+                تومان
+              </div>
+            </div>
+            <div
+              style="
+                flex: 1;
+                padding: 14px 16px;
+                text-align: center;
+                background: rgba(34, 197, 94, 0.06);
+              "
+            >
+              <div
+                style="
+                  font-size: 10px;
+                  color: var(--muted);
+                  font-weight: 700;
+                  margin-bottom: 6px;
+                "
+              >
+                ✅ سود خالص شما
+              </div>
+              <div
+                style="font-size: 18px; font-weight: 900; color: var(--green)"
+                id="oNet"
+              >
+                ۰
+              </div>
+              <div style="font-size: 10px; color: var(--muted)">تومان</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- متریک‌ها -->
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 16px;
+          "
+          id="ownerRevMetrics"
+        >
+          <div
+            style="
+              background: #0a1a10;
+              border: 1px solid var(--border);
+              border-radius: 10px;
+              padding: 14px;
+              text-align: center;
+            "
+          >
+            <div
+              style="
+                font-size: 10px;
+                color: var(--muted);
+                font-weight: 700;
+                margin-bottom: 6px;
+              "
+            >
+              💰 درآمد پرداختی
+            </div>
+            <div
+              style="font-size: 20px; font-weight: 900; color: var(--green)"
+              id="oRev"
+            >
+              ۰
+            </div>
+            <div style="font-size: 10px; color: var(--muted)">تومان</div>
+          </div>
+          <div
+            style="
+              background: #0a1a10;
+              border: 1px solid var(--border);
+              border-radius: 10px;
+              padding: 14px;
+              text-align: center;
+            "
+          >
+            <div
+              style="
+                font-size: 10px;
+                color: var(--muted);
+                font-weight: 700;
+                margin-bottom: 6px;
+              "
+            >
+              ✅ پرداخت‌شده
+            </div>
+            <div
+              style="font-size: 20px; font-weight: 900; color: var(--green)"
+              id="oPaid"
+            >
+              ۰
+            </div>
+            <div style="font-size: 10px; color: var(--muted)">رزرو</div>
+          </div>
+          <div
+            style="
+              background: #0a1a10;
+              border: 1px solid var(--border);
+              border-radius: 10px;
+              padding: 14px;
+              text-align: center;
+            "
+          >
+            <div
+              style="
+                font-size: 10px;
+                color: var(--muted);
+                font-weight: 700;
+                margin-bottom: 6px;
+              "
+            >
+              ⏳ در انتظار
+            </div>
+            <div
+              style="font-size: 20px; font-weight: 900; color: var(--amber)"
+              id="oPending"
+            >
+              ۰
+            </div>
+            <div style="font-size: 10px; color: var(--muted)">رزرو</div>
+          </div>
+          <div
+            style="
+              background: #0a1a10;
+              border: 1px solid var(--border);
+              border-radius: 10px;
+              padding: 14px;
+              text-align: center;
+            "
+          >
+            <div
+              style="
+                font-size: 10px;
+                color: var(--muted);
+                font-weight: 700;
+                margin-bottom: 6px;
+              "
+            >
+              📊 میانگین سود خالص
+            </div>
+            <div
+              style="font-size: 20px; font-weight: 900; color: var(--text)"
+              id="oAvg"
+            >
+              ۰
+            </div>
+            <div style="font-size: 10px; color: var(--muted)">تومان / رزرو</div>
+          </div>
+        </div>
+        <!-- نمودار -->
+        <div
+          style="
+            background: #0a1a10;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+          "
+        >
+          <div
+            style="
+              font-size: 12px;
+              font-weight: 700;
+              margin-bottom: 10px;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+            "
+          >
+            <span id="oChartTitle">نمودار درآمد</span>
+            <div
+              style="
+                display: flex;
+                gap: 10px;
+                font-size: 10px;
+                color: var(--body);
+              "
+            >
+              <span style="display: flex; align-items: center; gap: 4px"
+                ><span
+                  style="
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 2px;
+                    background: #22c55e;
+                    display: inline-block;
+                  "
+                ></span
+                >سود خالص شما</span
+              >
+              <span style="display: flex; align-items: center; gap: 4px"
+                ><span
+                  style="
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 2px;
+                    background: #f59e0b;
+                    display: inline-block;
+                  "
+                ></span
+                >در انتظار</span
+              >
+            </div>
+          </div>
+          <div style="position: relative; width: 100%; height: 160px">
+            <canvas
+              id="ownerRevChart"
+              style="width: 100%; height: 160px"
+            ></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="res-section">
+        <div class="box-title">📑 رزروهای این زمین</div>
+        <div class="bulk-row" style="margin-top: 14px; margin-bottom: 4px">
+          <div class="bulk-grp">
+            <label>نوع رزرو</label>
+            <select
+              class="bulk-sel"
+              id="resTypeFilter"
+              onchange="filterAndRenderReservations()"
+            >
+              <option value="all">همه</option>
+              <option value="single">جلسه‌ای</option>
+              <option value="recurring">تکراری (ماهانه/سالانه)</option>
+            </select>
+          </div>
+          <div class="bulk-grp">
+            <label>وضعیت</label>
+            <select
+              class="bulk-sel"
+              id="resStatusFilter2"
+              onchange="filterAndRenderReservations()"
+            >
+              <option value="all">همه</option>
+              <option value="pending">در انتظار</option>
+              <option value="paid">پرداخت‌شده</option>
+              <option value="cancelled">لغو شده</option>
+            </select>
+          </div>
+        </div>
+        <div class="res-list" id="resList">
+          <div class="res-empty">در حال بارگذاری رزروها...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast"></div>
+
+    <script src="../assets/js/owner.js"></script>
+    <script src="../assets/js/archive-feature-patch.js"></script>
+  </body>
+</html>

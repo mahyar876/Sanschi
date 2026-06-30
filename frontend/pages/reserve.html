@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="fa">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>سانس‌چی | رزرو سانس</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/reserve.css" />
+    <link rel="stylesheet" href="../assets/css/responsive.css" />
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <header class="header">
+      <div class="logo">
+        <a href="./index.html"><span class="logo-dot"></span>سانس‌چی</a>
+      </div>
+      <ul class="nav">
+        <li><a href="./index.html">خانه</a></li>
+        <li><a href="./gallery.html">زمین‌ها</a></li>
+        <li><a href="./reserve.html" class="active">رزرو</a></li>
+        <li><a href="./about.html">درباره ما</a></li>
+      </ul>
+      <a class="btn" href="./login.html">ورود</a>
+    </header>
+
+    <!-- PAGE HERO -->
+    <div class="page-hero">
+      <h1>رزرو <em>آنلاین</em> سانس</h1>
+      <p>زمین رو انتخاب کن، ساعت بزن، پرداخت کن — همین!</p>
+    </div>
+
+    <!-- STEPS BAR -->
+    <div class="steps-bar">
+      <div class="step-item active" id="step1-item">
+        <div class="step-circle">۱</div>
+        <span>انتخاب زمین</span>
+      </div>
+      <div class="step-arrow"></div>
+      <div class="step-item" id="step2-item">
+        <div class="step-circle">۲</div>
+        <span>انتخاب سانس</span>
+      </div>
+      <div class="step-arrow"></div>
+      <div class="step-item" id="step3-item">
+        <div class="step-circle">۳</div>
+        <span>اطلاعات</span>
+      </div>
+      <div class="step-arrow"></div>
+      <div class="step-item" id="step4-item">
+        <div class="step-circle">۴</div>
+        <span>پرداخت</span>
+      </div>
+    </div>
+
+    <!-- MAIN LAYOUT -->
+    <div class="reserve-layout">
+      <!-- LEFT -->
+      <div class="main-col">
+        <!-- FILTER BAR -->
+        <div class="filter-bar">
+          <div class="filter-group">
+            <label>نوع زمین</label>
+            <select id="typeFilter">
+              <option value="">همه زمین‌ها</option>
+              <option value="futsal">فوتسال سرپوشیده</option>
+              <option value="grass">چمن فوتبال</option>
+            </select>
+          </div>
+
+          <div class="filter-group" style="position: relative">
+            <label>تاریخ</label>
+            <input
+              type="text"
+              id="dateFilter"
+              readonly
+              placeholder="انتخاب تاریخ"
+              style="cursor: pointer"
+              onclick="toggleJalaliPicker()"
+            />
+            <div id="jalaliPicker" class="jalali-picker"></div>
+          </div>
+
+          <div class="filter-group">
+            <label>نفرات</label>
+            <select id="sizeFilter">
+              <option value="0">هر تعداد</option>
+              <option value="5">۵ نفره</option>
+              <option value="7">۷ نفره</option>
+              <option value="11">۱۱ نفره</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label>مرتب‌سازی</label>
+            <select id="sortFilter">
+              <option value="price">کمترین قیمت</option>
+              <option value="avail">بیشترین سانس خالی</option>
+            </select>
+          </div>
+
+          <button class="filter-btn" onclick="applyFilter()">🔍 جستجو</button>
+        </div>
+
+        <!-- PITCH CARDS -->
+        <span class="section-label" id="pitchCount">۶ زمین در دسترس</span>
+        <div class="pitches-grid" id="pitchesGrid"></div>
+
+        <!-- TIME SLOTS -->
+        <div class="slots-section" id="slotsSection" style="display: none">
+          <div class="slots-title">
+            سانس‌های موجود — <span id="selectedPitchName">—</span>
+          </div>
+          <div class="slots-grid" id="slotsGrid"></div>
+        </div>
+      </div>
+
+      <!-- RIGHT: sidebar -->
+      <div class="sidebar">
+        <div class="summary-box">
+          <div class="summary-title">خلاصه رزرو</div>
+          <div id="summaryContent">
+            <div class="summary-empty">هنوز زمینی انتخاب نشده</div>
+          </div>
+        </div>
+
+        <div class="form-box">
+          <h3>اطلاعات رزروکننده</h3>
+
+          <div class="form-group">
+            <label>نام و نام خانوادگی</label>
+            <input
+              type="text"
+              id="userName"
+              placeholder="علی محمدی"
+              autocomplete="name"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>شماره موبایل</label>
+            <input
+              type="tel"
+              id="userPhone"
+              placeholder="09123456789"
+              style="direction: ltr; text-align: right"
+              autocomplete="tel"
+            />
+          </div>
+
+          <div class="form-group">
+            <label>تعداد نفرات</label>
+            <select id="userCount">
+              <option value="10">۱۰ نفر</option>
+              <option value="12">۱۲ نفر</option>
+              <option value="14">۱۴ نفر</option>
+              <option value="16">۱۶ نفر</option>
+              <option value="22">۲۲ نفر</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>توضیحات (اختیاری)</label>
+            <input
+              type="text"
+              id="userNote"
+              placeholder="مثلاً: نیاز به رختکن داریم"
+            />
+          </div>
+
+          <div
+            class="form-group"
+            style="border-top: 1px solid var(--green-border); padding-top: 14px"
+          >
+            <label
+              style="
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                cursor: pointer;
+              "
+            >
+              <input
+                type="checkbox"
+                id="recurringToggle"
+                onchange="toggleRecurringUI()"
+                style="accent-color: var(--green)"
+              />
+              رزرو تکراری هفتگی (ماهیانه/سالیانه)
+            </label>
+          </div>
+          <div id="recurringBox" style="display: none">
+            <div class="form-group">
+              <label>روزهای هفته</label>
+              <div
+                id="weekdayChecks"
+                style="display: flex; flex-wrap: wrap; gap: 8px"
+              ></div>
+            </div>
+            <div class="form-group">
+              <label>مدت</label>
+              <select id="recurringDuration">
+                <option value="4">یک ماه (۴ هفته)</option>
+                <option value="52">یک سال (۵۲ هفته)</option>
+              </select>
+            </div>
+          </div>
+
+          <button
+            class="submit-btn"
+            id="submitBtn"
+            disabled
+            onclick="openPayModal()"
+          >
+            ادامه و پرداخت →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAYMENT MODAL -->
+    <div class="modal-overlay" id="payModal">
+      <div class="modal">
+        <button class="modal-close" onclick="closePayModal()">✕</button>
+        <div class="modal-icon">💳</div>
+        <h2>تأیید و پرداخت</h2>
+        <p class="modal-sub">اطلاعات رزرو خود را بررسی کنید</p>
+        <div class="modal-summary" id="modalSummary"></div>
+        <button class="pay-btn" onclick="doPayment()">پرداخت آنلاین 🔒</button>
+        <p class="secure-note">
+          درگاه پرداخت <span>امن و معتبر</span> — اطلاعات کارت شما ذخیره نمی‌شود
+        </p>
+      </div>
+    </div>
+
+    <!-- LOGIN PROMPT MODAL -->
+    <div class="modal-overlay" id="loginPrompt">
+      <div class="modal" style="text-align: center; max-width: 420px">
+        <button class="modal-close" onclick="closeLoginPrompt()">✕</button>
+        <div class="modal-icon" style="font-size: 32px; margin-bottom: 16px">
+          🔒
+        </div>
+        <h2 style="font-size: 22px; font-weight: 900; margin-bottom: 8px">
+          ورود لازمه
+        </h2>
+        <p class="modal-sub" style="margin-bottom: 28px">
+          برای تکمیل رزرو باید وارد حساب کاربریت بشی.<br />بعد از ورود، دقیقاً
+          همینجا برمی‌گردی.
+        </p>
+        <div
+          style="
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+          "
+        >
+          <a
+            href="./login.html?redirect=reserve"
+            class="pay-btn"
+            style="text-decoration: none; flex: 1; max-width: 180px"
+          >
+            ورود به حساب
+          </a>
+          <button
+            onclick="closeLoginPrompt()"
+            style="
+              flex: 1;
+              max-width: 180px;
+              padding: 14px;
+              background: transparent;
+              color: var(--text-body);
+              border: 1px solid var(--green-border);
+              border-radius: 10px;
+              font-family: 'Vazirmatn', sans-serif;
+              font-size: 15px;
+              font-weight: 600;
+              cursor: pointer;
+              transition: all 0.2s;
+            "
+            onmouseover="
+              this.style.borderColor = 'var(--green)';
+              this.style.color = 'var(--text)';
+            "
+            onmouseout="
+              this.style.borderColor = 'var(--green-border)';
+              this.style.color = 'var(--text-body)';
+            "
+          >
+            بعداً ورود میکنم
+          </button>
+        </div>
+        <p style="margin-top: 20px; font-size: 12px; color: var(--text-muted)">
+          حساب نداری؟
+          <a
+            href="./login.html?redirect=reserve"
+            style="color: var(--green); text-decoration: none; font-weight: 700"
+            >ثبت‌نام کن</a
+          >
+        </p>
+      </div>
+    </div>
+
+    <!-- SUCCESS MODAL -->
+    <div class="modal-overlay" id="successModal">
+      <div class="success-modal">
+        <div class="success-ring">✓</div>
+        <h2>رزرو موفق بود! 🎉</h2>
+        <p>سانس شما با موفقیت ثبت شد.<br />کد رزرو به پیامکت ارسال می‌شه.</p>
+        <div class="reserve-code" id="reserveCode">—</div>
+        <div class="success-actions">
+          <button class="btn" onclick="location.reload()">رزرو جدید</button>
+          <a
+            class="btn"
+            style="
+              background: transparent;
+              color: var(--green);
+              border: 1.5px solid var(--green);
+              box-shadow: none;
+            "
+            href="./index.html"
+          >
+            بازگشت به خانه
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>© ۱۴۰۵ تمامی حقوق متعلق به <span>سانس‌چی</span> است.</p>
+    </footer>
+
+    <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/reserve.js"></script>
+  </body>
+</html>

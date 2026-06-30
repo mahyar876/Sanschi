@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="fa">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>سانس‌چی پنالتی</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/penalty.css" />
+    <link rel="stylesheet" href="../assets/css/responsive.css" />
+  </head>
+  <body>
+    <div class="game">
+      <!-- TOPBAR -->
+      <div class="topbar">
+        <div class="topbar-l">
+          <div class="live-dot"></div>
+          سانس‌چی پنالتی
+        </div>
+        <div id="diffPill" class="diff-pill pill-easy">آسان</div>
+      </div>
+
+      <!-- SCORE -->
+      <div class="score-bar">
+        <div class="sc">
+          <div class="sc-n s" id="sShot">۰</div>
+          <div class="sc-l">شوت</div>
+        </div>
+        <div class="sc">
+          <div class="sc-n m" id="sMiss">۰</div>
+          <div class="sc-l">خطا</div>
+        </div>
+        <div class="sc">
+          <div class="sc-n g" id="sGoal">۰</div>
+          <div class="sc-l">گل</div>
+        </div>
+      </div>
+
+      <!-- FIELD -->
+      <div class="field" id="field">
+        <!-- field lines -->
+        <svg
+          class="field-lines"
+          viewBox="0 0 400 300"
+          preserveAspectRatio="xMidYMid slice"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect
+            x="10"
+            y="10"
+            width="380"
+            height="280"
+            fill="none"
+            stroke="rgba(255,255,255,.05)"
+            stroke-width="1.5"
+          />
+          <line
+            x1="200"
+            y1="10"
+            x2="200"
+            y2="290"
+            stroke="rgba(255,255,255,.04)"
+            stroke-width="1"
+          />
+          <circle
+            cx="200"
+            cy="150"
+            r="38"
+            fill="none"
+            stroke="rgba(255,255,255,.04)"
+            stroke-width="1"
+          />
+          <rect
+            x="110"
+            y="200"
+            width="180"
+            height="80"
+            fill="none"
+            stroke="rgba(255,255,255,.06)"
+            stroke-width="1.2"
+          />
+          <rect
+            x="155"
+            y="248"
+            width="90"
+            height="42"
+            fill="none"
+            stroke="rgba(255,255,255,.05)"
+            stroke-width="1"
+          />
+          <path
+            d="M145,300 Q200,235 255,300"
+            fill="none"
+            stroke="rgba(255,255,255,.06)"
+            stroke-width="1.2"
+          />
+          <circle cx="200" cy="250" r="2.5" fill="rgba(255,255,255,.18)" />
+        </svg>
+
+        <!-- GOAL -->
+        <div class="goal" id="goal">
+          <div class="goal-net"></div>
+          <div class="goal-frame"></div>
+
+          <!-- KEEPER داخل دروازه -->
+          <div class="keeper-wrap" id="keeperWrap">
+            <div class="keeper idle" id="keeper">
+              <div class="keeper-head"></div>
+              <div class="keeper-body"><div class="keeper-num">۱</div></div>
+            </div>
+          </div>
+
+          <!-- zone hints -->
+          <div class="zone-hint" id="zoneHint">
+            <div class="zh">↖</div>
+            <div class="zh">↑</div>
+            <div class="zh">↗</div>
+            <div class="zh">←</div>
+            <div class="zh">⦿</div>
+            <div class="zh">→</div>
+          </div>
+
+          <!-- shot zones -->
+          <div class="shot-zones" id="shotZones">
+            <div class="sz" data-z="0"></div>
+            <div class="sz" data-z="1"></div>
+            <div class="sz" data-z="2"></div>
+            <div class="sz" data-z="3"></div>
+            <div class="sz" data-z="4"></div>
+            <div class="sz" data-z="5"></div>
+          </div>
+        </div>
+
+        <!-- BALL -->
+        <div class="ball-shadow" id="shadow"></div>
+        <div class="ball" id="ball"></div>
+
+        <!-- AIM -->
+        <div class="aim" id="aim">
+          <div class="aim-ring"></div>
+          <div class="aim-cross"></div>
+        </div>
+
+        <!-- POWER -->
+        <div class="power-wrap" id="powerWrap">
+          <span class="power-label">قدرت</span>
+          <div class="power-track">
+            <div class="power-fill" id="powerFill"></div>
+          </div>
+        </div>
+
+        <!-- INSTR -->
+        <div class="instr" id="instr">روی دروازه کلیک کن تا شوت بزنی ⚽</div>
+
+        <!-- SAVE FLASH -->
+        <div class="save-flash" id="saveFlash"></div>
+
+        <!-- MSG -->
+        <div class="msg-ov" id="msgOv">
+          <div class="msg-box">
+            <span class="msg-emoji" id="msgEmoji"></span>
+            <div class="msg-title" id="msgTitle"></div>
+            <div class="msg-sub" id="msgSub"></div>
+          </div>
+        </div>
+
+        <!-- FINAL -->
+        <div class="final-ov" id="finalOv">
+          <div class="final-box">
+            <span class="final-emoji" id="fEmoji">🏆</span>
+            <div class="final-title" id="fTitle"></div>
+            <div class="final-score" id="fScore"></div>
+            <div class="final-sub" id="fSub"></div>
+            <div
+              id="fDiscountBox"
+              style="
+                display: none;
+                margin: 14px 0;
+                padding: 14px 16px;
+                background: rgba(34, 197, 94, 0.07);
+                border: 1px solid rgba(34, 197, 94, 0.25);
+                border-radius: 12px;
+                text-align: center;
+              "
+            ></div>
+            <div
+              class="diff-suggest"
+              id="fSuggest"
+              style="display: none"
+              onclick="suggestDiff()"
+            ></div>
+            <button class="final-btn" onclick="openDiffScreen()">
+              بازی مجدد 🔄
+            </button>
+            <a class="final-reserve" href="./reserve.html">رزرو زمین واقعی ←</a>
+          </div>
+        </div>
+
+        <!-- DIFFICULTY SCREEN -->
+        <div class="diff-screen" id="diffScreen">
+          <div class="diff-box">
+            <div class="diff-title">سانس‌چی <em>پنالتی</em></div>
+            <div class="diff-subtitle">
+              درجه سختی رو انتخاب کن.<br />
+              واکنش دروازه‌بان و هوش اون تغییر می‌کنه!
+            </div>
+            <div class="diff-cards">
+              <div class="diff-card easy" onclick="startGame('easy')">
+                <div class="diff-icon">🟢</div>
+                <div class="diff-info">
+                  <div class="diff-name">آسان — مبتدی</div>
+                  <div class="diff-desc">
+                    دروازه‌بان کُند و رندم عمل می‌کنه.<br />واکنش با تأخیر زیاد،
+                    دایو تصادفی، شانس دفع پایین.
+                  </div>
+                  <div class="diff-stats">
+                    <span class="diff-stat">⏱ واکنش کُند</span>
+                    <span class="diff-stat">🎲 دایو رندم</span>
+                    <span class="diff-stat">🥅 دفع ۲۵٪</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="diff-card medium" onclick="startGame('medium')">
+                <div class="diff-icon">🟡</div>
+                <div class="diff-info">
+                  <div class="diff-name">متوسط — نیمه‌حرفه‌ای</div>
+                  <div class="diff-desc">
+                    دروازه‌بان گاهی جهت شوت رو حدس می‌زنه.<br />وسط خطرناکه،
+                    گوشه‌ها نسبتاً امن‌ترن.
+                  </div>
+                  <div class="diff-stats">
+                    <span class="diff-stat">⏱ واکنش معقول</span>
+                    <span class="diff-stat">🧠 حدس ۴۰٪</span>
+                    <span class="diff-stat">🥅 دفع ۴۵٪</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="diff-card hard" onclick="startGame('hard')">
+                <div class="diff-icon">🔴</div>
+                <div class="diff-info">
+                  <div class="diff-name">سخت — حرفه‌ای</div>
+                  <div class="diff-desc">
+                    دروازه‌بان الگوی شوتت رو می‌خونه و پیش‌بینی می‌کنه.<br />فقط
+                    گوشه‌های بالا شانس واقعی دارن!
+                  </div>
+                  <div class="diff-stats">
+                    <span class="diff-stat">⚡ واکنش سریع</span>
+                    <span class="diff-stat">🧠 حدس ۵۵٪</span>
+                    <span class="diff-stat">🥅 دفع ~۳۶٪</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOTTOM -->
+      <div class="bottom-bar">
+        <button class="restart-btn" onclick="openDiffScreen()">
+          تغییر سختی
+        </button>
+        <div class="shots-dots" id="dots">
+          <div class="sdot" id="d0"></div>
+          <div class="sdot" id="d1"></div>
+          <div class="sdot" id="d2"></div>
+          <div class="sdot" id="d3"></div>
+          <div class="sdot" id="d4"></div>
+        </div>
+        <button class="share-btn" onclick="shareScore()">اشتراک‌گذاری</button>
+      </div>
+    </div>
+    <script src="../assets/js/penalty.js"></script>
+  </body>
+</html>

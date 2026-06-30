@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="fa">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>سانس‌چی | ورود / ثبت‌نام</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/login.css" />
+    <link rel="stylesheet" href="../assets/css/responsive.css" />
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <header class="header">
+      <div class="logo">
+        <a href="./index.html"><span class="logo-dot"></span>سانس‌چی</a>
+      </div>
+      <ul class="nav">
+        <li><a href="./index.html">خانه</a></li>
+        <li><a href="./gallery.html">زمین‌ها</a></li>
+        <li><a href="./reserve.html">رزرو</a></li>
+        <li><a href="./about.html">درباره ما</a></li>
+      </ul>
+    </header>
+
+    <!-- MAIN -->
+    <div class="auth-main">
+      <!-- LEFT: VISUAL -->
+      <div class="auth-visual">
+        <div class="visual-inner">
+          <div class="visual-pitch">
+            <svg viewBox="0 0 360 220" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="vg" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#0d3320" />
+                  <stop offset="100%" stop-color="#051a0e" />
+                </linearGradient>
+                <radialGradient id="vglow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="rgba(34,197,94,0.09)" />
+                  <stop offset="100%" stop-color="transparent" />
+                </radialGradient>
+              </defs>
+              <rect width="360" height="220" rx="14" fill="url(#vg)" />
+              <rect width="360" height="220" rx="14" fill="url(#vglow)" />
+              <rect
+                x="14"
+                y="12"
+                width="332"
+                height="196"
+                rx="3"
+                fill="none"
+                stroke="rgba(255,255,255,0.13)"
+                stroke-width="1.5"
+              />
+              <line
+                x1="180"
+                y1="12"
+                x2="180"
+                y2="208"
+                stroke="rgba(255,255,255,0.11)"
+                stroke-width="1.5"
+              />
+              <circle
+                cx="180"
+                cy="110"
+                r="44"
+                fill="none"
+                stroke="rgba(255,255,255,0.11)"
+                stroke-width="1.5"
+              />
+              <circle cx="180" cy="110" r="5" fill="rgba(255,255,255,0.22)" />
+              <!-- left penalty -->
+              <rect
+                x="14"
+                y="60"
+                width="62"
+                height="100"
+                fill="none"
+                stroke="rgba(255,255,255,0.08)"
+                stroke-width="1.2"
+              />
+              <rect
+                x="14"
+                y="78"
+                width="28"
+                height="64"
+                fill="none"
+                stroke="rgba(255,255,255,0.06)"
+                stroke-width="1"
+              />
+              <!-- right penalty -->
+              <rect
+                x="284"
+                y="60"
+                width="62"
+                height="100"
+                fill="none"
+                stroke="rgba(255,255,255,0.08)"
+                stroke-width="1.2"
+              />
+              <rect
+                x="318"
+                y="78"
+                width="28"
+                height="64"
+                fill="none"
+                stroke="rgba(255,255,255,0.06)"
+                stroke-width="1"
+              />
+              <!-- corner arcs -->
+              <path
+                d="M14,12 Q26,12 26,24"
+                fill="none"
+                stroke="rgba(255,255,255,0.07)"
+                stroke-width="1"
+              />
+              <path
+                d="M346,12 Q334,12 334,24"
+                fill="none"
+                stroke="rgba(255,255,255,0.07)"
+                stroke-width="1"
+              />
+              <path
+                d="M14,208 Q26,208 26,196"
+                fill="none"
+                stroke="rgba(255,255,255,0.07)"
+                stroke-width="1"
+              />
+              <path
+                d="M346,208 Q334,208 334,196"
+                fill="none"
+                stroke="rgba(255,255,255,0.07)"
+                stroke-width="1"
+              />
+              <!-- green glow line -->
+              <line
+                x1="80"
+                y1="208"
+                x2="280"
+                y2="208"
+                stroke="rgba(34,197,94,0.3)"
+                stroke-width="2"
+              />
+            </svg>
+          </div>
+
+          <div class="visual-title">به <em>سانس‌چی</em> خوش اومدی</div>
+          <p class="visual-sub">
+            با یه حساب کاربری ساده، رزرو زمین رو راحت‌تر از همیشه تجربه کن.
+          </p>
+
+          <div class="visual-stats">
+            <div class="vstat"><strong>۵۰+</strong><span>زمین فعال</span></div>
+            <div class="vstat"><strong>۱۲۰۰+</strong><span>کاربر</span></div>
+            <div class="vstat">
+              <strong>۸۰۰۰+</strong><span>رزرو موفق</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: FORM -->
+      <div class="auth-form-panel">
+        <div class="auth-box">
+          <!-- Tabs -->
+          <div class="auth-tabs">
+            <button class="auth-tab active" onclick="switchTab('login')">
+              ورود
+            </button>
+            <button class="auth-tab" onclick="switchTab('register')">
+              ثبت‌نام
+            </button>
+          </div>
+
+          <!-- LOGIN PANEL -->
+          <div class="form-panel active" id="panel-login">
+            <div class="form-title">خوش برگشتی 👋</div>
+            <div class="form-sub">با شماره موبایل یا ایمیل وارد شو</div>
+
+            <!-- Method toggle -->
+            <div style="display: flex; gap: 8px; margin-bottom: 20px">
+              <button
+                class="method-btn active"
+                id="method-phone"
+                onclick="setMethod('phone')"
+              >
+                📱 موبایل
+              </button>
+              <button
+                class="method-btn"
+                id="method-email"
+                onclick="setMethod('email')"
+              >
+                ✉️ ایمیل
+              </button>
+            </div>
+
+            <!-- Phone login -->
+            <div id="login-phone-flow">
+              <div class="fg">
+                <label>شماره موبایل</label>
+                <div class="phone-row">
+                  <input
+                    type="tel"
+                    id="loginPhone"
+                    placeholder="09123456789"
+                    style="direction: ltr; text-align: right"
+                    inputmode="numeric"
+                  />
+                  <button
+                    class="send-otp-btn"
+                    id="sendOtpBtn"
+                    onclick="sendOTP()"
+                  >
+                    ارسال رمز
+                  </button>
+                </div>
+                <div class="err-msg" id="loginPhoneErr">
+                  شماره موبایل معتبر نیست
+                </div>
+              </div>
+
+              <div id="otpBlock" style="display: none">
+                <div class="fg">
+                  <label>رمز یک‌بار مصرف</label>
+                  <div class="otp-row" id="loginOtpRow">
+                    <input class="otp-cell" maxlength="1" inputmode="numeric" />
+                    <input class="otp-cell" maxlength="1" inputmode="numeric" />
+                    <input class="otp-cell" maxlength="1" inputmode="numeric" />
+                    <input class="otp-cell" maxlength="1" inputmode="numeric" />
+                  </div>
+                  <div class="otp-hint" id="otpCountdown">
+                    ارسال مجدد پس از <strong id="otpSec">۶۰</strong> ثانیه
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Email login -->
+            <div id="login-email-flow" style="display: none">
+              <div class="fg">
+                <label>ایمیل</label>
+                <input
+                  type="email"
+                  id="loginEmail"
+                  placeholder="example@email.com"
+                  style="direction: ltr; text-align: right"
+                />
+                <div class="err-msg" id="loginEmailErr">ایمیل معتبر نیست</div>
+              </div>
+              <div class="fg">
+                <label>رمز عبور</label>
+                <div class="pw-wrap">
+                  <input
+                    type="password"
+                    id="loginPass"
+                    placeholder="رمز عبور"
+                  />
+                  <button
+                    class="pw-toggle"
+                    onclick="togglePw('loginPass', this)"
+                    tabindex="-1"
+                  >
+                    👁
+                  </button>
+                </div>
+                <div class="err-msg" id="loginPassErr">رمز عبور الزامی است</div>
+              </div>
+              <div style="text-align: left; margin-bottom: 16px">
+                <a
+                  href="#"
+                  style="
+                    font-size: 12px;
+                    color: var(--green);
+                    text-decoration: none;
+                  "
+                  >فراموشی رمز عبور</a
+                >
+              </div>
+            </div>
+
+            <button class="submit-btn" id="loginBtn" onclick="doLogin()">
+              <div class="spinner"></div>
+              <span class="btn-text">ورود به حساب</span>
+            </button>
+
+            <div class="auth-switch">
+              حساب نداری؟
+              <a href="#" onclick="switchTab('register')">ثبت‌نام کن</a>
+            </div>
+          </div>
+
+          <!-- REGISTER PANEL -->
+          <div class="form-panel" id="panel-register">
+            <div class="form-title">ثبت‌نام 🚀</div>
+            <div class="form-sub">یه حساب رایگان بساز و شروع کن</div>
+
+            <div class="fg">
+              <label>نام و نام خانوادگی</label>
+              <input
+                type="text"
+                id="regName"
+                placeholder="علی محمدی"
+                autocomplete="name"
+              />
+              <div class="err-msg" id="regNameErr">
+                نام باید حداقل ۳ حرف باشد
+              </div>
+            </div>
+
+            <div class="fg">
+              <label>شماره موبایل</label>
+              <input
+                type="tel"
+                id="regPhone"
+                placeholder="09123456789"
+                style="direction: ltr; text-align: right"
+                inputmode="numeric"
+              />
+              <div class="err-msg" id="regPhoneErr">
+                شماره موبایل معتبر نیست
+              </div>
+            </div>
+
+            <div class="fg">
+              <label>ایمیل (اختیاری)</label>
+              <input
+                type="email"
+                id="regEmail"
+                placeholder="example@email.com"
+                style="direction: ltr; text-align: right"
+                autocomplete="email"
+              />
+            </div>
+
+            <div class="fg">
+              <label>رمز عبور</label>
+              <div class="pw-wrap">
+                <input
+                  type="password"
+                  id="regPass"
+                  placeholder="حداقل ۸ کاراکتر"
+                  oninput="checkPassStrength(this.value)"
+                />
+                <button
+                  class="pw-toggle"
+                  onclick="togglePw('regPass', this)"
+                  tabindex="-1"
+                >
+                  👁
+                </button>
+              </div>
+              <div class="err-msg" id="regPassErr">
+                رمز عبور باید حداقل ۸ کاراکتر باشد
+              </div>
+              <div
+                class="pass-strength"
+                id="passStrength"
+                style="display: none; margin-top: 8px"
+              >
+                <div style="display: flex; gap: 4px; margin-bottom: 4px">
+                  <div class="ps-bar" id="ps1"></div>
+                  <div class="ps-bar" id="ps2"></div>
+                  <div class="ps-bar" id="ps3"></div>
+                  <div class="ps-bar" id="ps4"></div>
+                </div>
+                <span
+                  id="psLabel"
+                  style="font-size: 11px; color: var(--text-muted)"
+                ></span>
+              </div>
+            </div>
+
+            <div class="fg">
+              <label>تکرار رمز عبور</label>
+              <div class="pw-wrap">
+                <input
+                  type="password"
+                  id="regPassConfirm"
+                  placeholder="رمز عبور را تکرار کن"
+                />
+                <button
+                  class="pw-toggle"
+                  onclick="togglePw('regPassConfirm', this)"
+                  tabindex="-1"
+                >
+                  👁
+                </button>
+              </div>
+              <div class="err-msg" id="regPassConfirmErr">
+                رمزها مطابقت ندارند
+              </div>
+            </div>
+
+            <div
+              style="
+                display: flex;
+                align-items: flex-start;
+                gap: 10px;
+                margin-bottom: 20px;
+                font-size: 13px;
+                color: var(--text-body);
+              "
+            >
+              <input
+                type="checkbox"
+                id="termsCheck"
+                style="margin-top: 4px; accent-color: var(--green)"
+              />
+              <label for="termsCheck">
+                <a href="#" style="color: var(--green); text-decoration: none"
+                  >قوانین و مقررات</a
+                >
+                سانس‌چی را خوانده‌ام و می‌پذیرم
+              </label>
+            </div>
+
+            <button class="submit-btn" id="registerBtn" onclick="doRegister()">
+              <div class="spinner"></div>
+              <span class="btn-text">ساخت حساب کاربری</span>
+            </button>
+
+            <div class="auth-switch">
+              قبلاً ثبت‌نام کردی؟
+              <a href="#" onclick="switchTab('login')">وارد شو</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUCCESS OVERLAY -->
+    <div class="success-overlay" id="successOverlay">
+      <div class="success-ring" id="successIcon">✓</div>
+      <h2 id="successTitle">ورود موفق!</h2>
+      <p id="successMsg">داری به صفحه اصلی هدایت می‌شی...</p>
+      <a class="go-btn" id="goBtn" href="./index.html">رفتن به خانه</a>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>© ۱۴۰۵ تمامی حقوق متعلق به <span>سانس‌چی</span> است.</p>
+    </footer>
+
+    <script src="../assets/js/login.js"></script>
+  </body>
+</html>

@@ -1,0 +1,150 @@
+/* ════════════════════════════════════════════════════
+   RESPONSIVE — لایه ریسپانسیو مشترک سانس‌چی
+   این فایل بعد از CSS اختصاصی هر صفحه لود می‌شود و
+   نقش «تورِ ایمنی» ریسپانسیو را دارد: جلوگیری از سرریز
+   افقی، اسکرول جدول‌ها، سیال‌کردن رسانه‌ها و اصلاحات موبایل.
+   ════════════════════════════════════════════════════ */
+
+/* ── جلوگیری از اسکرول افقی در کل سایت ── */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+*,
+*::before,
+*::after {
+  min-width: 0;
+}
+
+/* ── رسانه‌ها سیال شوند ── */
+img,
+svg,
+video,
+canvas,
+iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ── جدول‌ها: اسکرول افقی به‌جای سرریز ── */
+.table-wrap,
+.table-wrapper,
+.slots-table-wrap,
+.res-table-wrap,
+.rev-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+table {
+  max-width: 100%;
+}
+
+/* ════════════════════════════════════════════════════
+   TABLET  (≤ 900px)
+   ════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  /* نوار بالا / هدر بشکند و وسط‌چین شود */
+  .header,
+  .topbar,
+  .bank-bar {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  /* جدول‌های لخت داخل پنل‌ها قابل اسکرول شوند */
+  .panel table,
+  .card table,
+  .slots-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* ════════════════════════════════════════════════════
+   MOBILE  (≤ 600px)
+   ════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  /* پدینگ‌های بزرگ صفحه را کوچک کن */
+  .panel,
+  .card,
+  .stat-card,
+  .order-box,
+  .card-form-box {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* منو در موبایل به‌صورت ردیفی و قابل پیمایش */
+  .nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 16px;
+  }
+
+  /* دکمه‌های پهن، تمام‌عرض شوند */
+  .pay-btn,
+  .btn-block {
+    width: 100%;
+  }
+
+  /* مودال‌ها داخل صفحه جا شوند */
+  .modal,
+  .modal-box,
+  .lightbox-content,
+  .pay-modal-box {
+    width: 94vw !important;
+    max-width: 94vw !important;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  /* گریدهای آماری/کارتی تک‌ستونه شوند (به‌جز تقویم و بازی پنالتی) */
+  .stat-grid,
+  .stats-row,
+  .kpi-grid,
+  .metrics,
+  .rev-metrics,
+  .channels,
+  .summary-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* فونت تیترهای بزرگ کمی کوچک‌تر */
+  h1 {
+    font-size: clamp(22px, 7vw, 30px);
+  }
+}
+
+/* ════════════════════════════════════════════════════
+   SMALL MOBILE  (≤ 400px)
+   ════════════════════════════════════════════════════ */
+@media (max-width: 400px) {
+  body {
+    font-size: 14px;
+  }
+  .logo a,
+  .pay-logo span {
+    font-size: 16px;
+  }
+}
+
+/* ════════════════════════════════════════════════════
+   PENALTY GAME — مقیاس‌پذیر کردن صحنه بازی روی موبایل
+   (صفحه penalty.html هیچ ریسپانسیوی نداشت)
+   ════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .goal-wrap,
+  .goal-area,
+  .stage,
+  .pk-stage {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  .diff-grid,
+  .diff-stats {
+    grid-template-columns: 1fr !important;
+  }
+}

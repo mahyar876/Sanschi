@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="fa">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>سانس‌چی | تسویه مالی</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/settlement.css" />
+    <link rel="stylesheet" href="../assets/css/responsive.css" />
+  </head>
+  <body>
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="topbar-logo">
+        <div class="logo-dot"></div>
+        سانس‌چی
+        <span class="topbar-badge" id="panelBadge">تسویه مالی</span>
+      </div>
+      <div class="topbar-right">
+        <span class="role-tag" id="roleTag">—</span>
+        <a href="#" class="back-btn" id="backBtn">← بازگشت به پنل</a>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+      <!-- PAGE HEADER -->
+      <div class="page-header">
+        <div>
+          <div class="page-title">تسویه <em>مالی</em></div>
+          <div class="page-sub" id="pageSub">در حال بارگذاری...</div>
+        </div>
+        <div class="header-actions" id="headerActions"></div>
+      </div>
+
+      <!-- COMMISSION BANNER (فقط ادمین) -->
+      <div
+        class="commission-banner"
+        id="commissionBanner"
+        style="display: none"
+      >
+        <div>
+          <div class="cb-label">💰 کل کمیسیون دریافتی (پرداخت‌شده)</div>
+          <div class="cb-val" id="totalCommission">۰</div>
+          <div class="cb-sub">تومان</div>
+        </div>
+        <div class="commission-divider"></div>
+        <div>
+          <div class="cb-label">📊 نرخ کمیسیون فعلی</div>
+          <div class="commission-rate-wrap">
+            <input
+              type="number"
+              class="commission-rate-inp"
+              id="commissionRateInp"
+              value="10"
+              min="0"
+              max="50"
+            />
+            <span style="font-size: 18px; font-weight: 900; color: var(--green)"
+              >٪</span
+            >
+            <button class="commission-rate-save" onclick="saveCommissionRate()">
+              ذخیره
+            </button>
+          </div>
+          <div class="cb-sub">درصد از هر رزرو، سهم سانس‌چی</div>
+        </div>
+        <div class="commission-divider"></div>
+        <div>
+          <div class="cb-label">💵 کل پرداخت به ownerها</div>
+          <div class="cb-val" id="totalNetPaid">۰</div>
+          <div class="cb-sub">تومان (تسویه‌های پرداخت‌شده)</div>
+        </div>
+      </div>
+
+      <!-- METRICS -->
+      <div class="metrics" id="metricsGrid">
+        <div class="metric-card green">
+          <div class="mc-label">💰 کل درآمد ناخالص</div>
+          <div class="mc-val green" id="m-gross">۰</div>
+          <div class="mc-sub">تومان</div>
+        </div>
+        <div class="metric-card amber">
+          <div class="mc-label">⏳ در انتظار تسویه</div>
+          <div class="mc-val amber" id="m-pending">۰</div>
+          <div class="mc-sub">تسویه</div>
+        </div>
+        <div class="metric-card blue">
+          <div class="mc-label">✅ تأیید‌شده</div>
+          <div class="mc-val blue" id="m-approved">۰</div>
+          <div class="mc-sub">تسویه</div>
+        </div>
+        <div class="metric-card green">
+          <div class="mc-label">💸 پرداخت‌شده</div>
+          <div class="mc-val green" id="m-paid">۰</div>
+          <div class="mc-sub">تسویه</div>
+        </div>
+      </div>
+
+      <!-- GENERATE BAR (فقط ادمین) -->
+      <div class="generate-bar" id="generateBar" style="display: none">
+        <p>
+          <strong>ارسال درخواست تسویه (بازه‌ای):</strong> از تاریخ تا تاریخ را
+          انتخاب کن تا درخواست تسویه برای ادمین ثبت شود.
+        </p>
+        <input
+          type="text"
+          class="gen-date-inp"
+          id="genFromDateInp"
+          placeholder="از تاریخ (مثلاً 1403/03/01)"
+        />
+        <input
+          type="text"
+          class="gen-date-inp"
+          id="genToDateInp"
+          placeholder="تا تاریخ (مثلاً 1403/03/31)"
+        />
+        <button class="gen-btn" onclick="generateSettlements()">
+          📤 ارسال درخواست تسویه
+        </button>
+      </div>
+
+      <!-- FILTER BAR -->
+      <div class="filter-bar">
+        <div class="fg">
+          <label>وضعیت</label>
+          <select id="filterStatus">
+            <option value="">همه</option>
+            <option value="pending">در انتظار</option>
+            <option value="approved">تأیید‌شده</option>
+            <option value="paid">پرداخت‌شده</option>
+            <option value="rejected">رد‌شده</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>تاریخ</label>
+          <input
+            type="text"
+            id="filterDate"
+            placeholder="1403/03/24"
+            style="width: 140px"
+          />
+        </div>
+        <button class="filter-apply" onclick="loadSettlements()">
+          🔍 اعمال فیلتر
+        </button>
+        <button
+          class="filter-apply"
+          style="
+            background: var(--glow);
+            color: var(--green);
+            border: 1px solid var(--border);
+          "
+          onclick="resetFilter()"
+        >
+          ↺ حذف فیلتر
+        </button>
+      </div>
+
+      <!-- TABLE -->
+      <div class="table-wrap">
+        <table>
+          <thead id="tableHead"></thead>
+          <tbody id="tableBody">
+            <tr class="loading-row">
+              <td colspan="8">
+                <div class="spinner-sm"></div>
+                در حال بارگذاری...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- DETAIL MODAL -->
+    <div class="modal-overlay" id="detailModal">
+      <div class="modal">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="modal-title" id="modalTitle">جزئیات تسویه</div>
+        <div class="modal-rows" id="modalRows"></div>
+        <div
+          class="res-mini-list"
+          id="modalResList"
+          style="display: none"
+        ></div>
+        <div class="modal-note-wrap" id="modalNoteWrap" style="display: none">
+          <label>یادداشت (اختیاری)</label>
+          <textarea
+            class="modal-note-inp"
+            id="modalNote"
+            placeholder="توضیحات ادمین..."
+          ></textarea>
+        </div>
+        <div class="modal-actions" id="modalActions"></div>
+      </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast"></div>
+
+    <script src="../assets/js/settlement.js"></script>
+  </body>
+</html>

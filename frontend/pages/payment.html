@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="fa">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>پرداخت رزرو | سانس‌چی</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/payment.css" />
+    <link rel="stylesheet" href="../assets/css/responsive.css" />
+  </head>
+  <body>
+    <!-- TOP BAR -->
+    <div class="pay-topbar">
+      <div class="pay-logo">
+        <div class="pay-logo-icon">S</div>
+        <span>سانس‌چی</span>
+      </div>
+      <div class="pay-secure">
+        <div class="ssl-badge">🔒 SSL</div>
+        <span>پرداخت امن</span>
+      </div>
+    </div>
+
+    <!-- MAIN -->
+    <div class="pay-wrap">
+      <div class="pay-title">
+        <h1>تکمیل پرداخت</h1>
+        <p>اطلاعات رزرو خود را بررسی و پرداخت را تکمیل کنید</p>
+      </div>
+
+      <!-- RESERVATION SUMMARY -->
+      <div class="card">
+        <div class="card-head">
+          <span class="ic">📋</span>
+          <h2>خلاصه رزرو</h2>
+        </div>
+
+        <div class="pitch-head">
+          <div class="pitch-thumb">
+            <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+              <rect width="60" height="60" fill="#0d3320" />
+              <rect
+                x="4"
+                y="4"
+                width="52"
+                height="52"
+                fill="none"
+                stroke="rgba(255,255,255,0.12)"
+                stroke-width="1"
+              />
+              <line
+                x1="30"
+                y1="4"
+                x2="30"
+                y2="56"
+                stroke="rgba(255,255,255,0.12)"
+                stroke-width="1"
+              />
+              <circle
+                cx="30"
+                cy="30"
+                r="12"
+                fill="none"
+                stroke="rgba(255,255,255,0.12)"
+                stroke-width="1"
+              />
+              <circle cx="30" cy="30" r="2" fill="rgba(255,255,255,0.2)" />
+            </svg>
+          </div>
+          <div>
+            <div class="pitch-name" id="orderPitchName">—</div>
+            <div class="pitch-type" id="orderPitchType">—</div>
+          </div>
+        </div>
+
+        <div class="info-rows">
+          <div class="info-row">
+            <span class="lbl">تاریخ</span>
+            <span class="val" id="orderDate">—</span>
+          </div>
+          <div class="info-row">
+            <span class="lbl">ساعت</span>
+            <span class="val" id="orderTime">—</span>
+          </div>
+          <div class="info-row">
+            <span class="lbl">رزروکننده</span>
+            <span class="val" id="orderName">—</span>
+          </div>
+          <div class="info-row">
+            <span class="lbl">موبایل</span>
+            <span class="val ltr" id="orderPhone">—</span>
+          </div>
+          <div class="info-row">
+            <span class="lbl">تعداد نفرات</span>
+            <span class="val" id="orderCount">—</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- DISCOUNT -->
+      <div class="card">
+        <div class="card-head">
+          <span class="ic">🎟️</span>
+          <h2>کد تخفیف</h2>
+        </div>
+        <div class="disc-label">اگر کد تخفیف داری، اینجا وارد کن</div>
+        <div class="disc-row">
+          <input
+            type="text"
+            class="disc-input"
+            id="discountInput"
+            placeholder="SNS15-XXXXXX"
+            maxlength="14"
+          />
+          <button class="disc-apply" onclick="applyDiscount()">اعمال</button>
+        </div>
+        <div class="disc-msg" id="discountMsg"></div>
+        <div class="disc-badge" id="discountBadge">
+          <span class="txt" id="discountBadgeText"></span>
+          <button class="rm" onclick="removeDiscount()" title="حذف کد">
+            ✕
+          </button>
+        </div>
+      </div>
+
+      <!-- PRICE + PAY -->
+      <div class="card">
+        <div class="card-head">
+          <span class="ic">💳</span>
+          <h2>مبلغ نهایی</h2>
+        </div>
+
+        <div class="price-box">
+          <div class="price-row">
+            <span>مبلغ رزرو</span>
+            <span class="v" id="priceSubtotal">—</span>
+          </div>
+          <div
+            class="price-row discount"
+            id="priceDiscountRow"
+            style="display: none"
+          >
+            <span>تخفیف</span>
+            <span class="v" id="priceDiscount">—</span>
+          </div>
+          <div class="price-divider"></div>
+          <div class="price-total">
+            <span class="tl">مبلغ قابل پرداخت</span>
+            <span class="tv" id="priceTotal">—</span>
+          </div>
+        </div>
+
+        <button class="pay-btn" id="payBtn" onclick="startPayment()">
+          <div class="spinner"></div>
+          <span class="btn-text">
+            پرداخت <span id="btnAmount">—</span>
+            <span class="zp-logo">· زرین‌پال</span>
+          </span>
+        </button>
+
+        <a class="cancel-link" href="./reserve.html">انصراف و بازگشت به رزرو</a>
+      </div>
+
+      <!-- TRUST BADGES -->
+      <div class="trust-row">
+        <div class="trust-badge"><span>🔒</span> پرداخت امن</div>
+        <div class="trust-badge"><span>🏦</span> درگاه زرین‌پال</div>
+        <div class="trust-badge"><span>🛡️</span> حفاظت خریدار</div>
+      </div>
+    </div>
+
+    <!-- SUCCESS SCREEN -->
+    <div class="success-screen" id="successScreen">
+      <div class="success-ring">✓</div>
+      <h2>پرداخت موفق! 🎉</h2>
+      <p>
+        تراکنش شما با موفقیت انجام شد.<br />کد رزرو به پیامک ارسال خواهد شد.
+      </p>
+      <div class="reserve-code-box" id="finalCode">SNS-XXXXXX</div>
+      <div class="success-detail" id="successDetail"></div>
+      <div class="success-actions">
+        <button class="btn-green" onclick="location.href = './reserve.html'">
+          رزرو جدید
+        </button>
+        <a class="btn-ghost" href="./index.html">بازگشت به خانه</a>
+      </div>
+    </div>
+
+    <script src="../assets/js/payment.js"></script>
+  </body>
+</html>

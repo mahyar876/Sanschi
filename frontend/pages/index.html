@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="fa">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>سانس‌چی | رزرو سانس</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/responsive.css" />
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <header class="header">
+      <div class="logo">
+        <a target="_self" href="./index.html">
+          <span class="logo-dot"></span>
+          سانس‌چی
+        </a>
+      </div>
+
+      <ul class="nav">
+        <li><a href="./index.html">خانه</a></li>
+        <li><a href="./gallery.html">زمین‌ها</a></li>
+        <li><a href="./reserve.html">رزرو</a></li>
+        <li><a href="./about.html">درباره ما</a></li>
+      </ul>
+
+      <a class="btn" href="./reserve.html">شروع رزرو</a>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-text">
+        <div class="hero-eyebrow">
+          <span></span>
+          رزرو آنلاین | سریع و آسان
+        </div>
+        <h1>زمین بوک کن،<br /><em>بازی رو شروع کن</em></h1>
+        <p>
+          با سانس‌چی در کمتر از یک دقیقه زمین فوتسال یا چمن فوتبال مورد نظرت رو
+          رزرو کن. بدون تماس، بدون معطلی.
+        </p>
+        <div class="hero-actions">
+          <a class="btn" href="./reserve.html">رزرو همین الان</a>
+          <a class="btn btn-ghost" href="./gallery.html">مشاهده زمین‌ها</a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="pitch-card">
+          <!-- LIVE BADGE -->
+          <div class="live-badge" id="liveBadge">
+            <span class="live-dot"></span>
+            <span id="liveCount">۳</span> نفر الان رزرو کردن
+          </div>
+
+          <div class="pitch-field">
+            <div class="grass-stripes"></div>
+            <div class="light-sweep"></div>
+            <div class="glow-spot"></div>
+            <div class="goal-left"></div>
+            <div class="goal-right"></div>
+            <div class="center-circle">
+              <div class="center-dot"></div>
+            </div>
+
+            <div class="ball-trail t3"></div>
+            <div class="ball-trail t2"></div>
+            <div class="ball-trail t1"></div>
+            <div class="animated-ball"></div>
+
+            <div class="particles">
+              <span
+                class="particle"
+                style="left: 8%; animation-duration: 6s; animation-delay: 0s"
+              ></span>
+              <span
+                class="particle"
+                style="left: 20%; animation-duration: 8s; animation-delay: 1.2s"
+              ></span>
+              <span
+                class="particle"
+                style="
+                  left: 35%;
+                  animation-duration: 5.5s;
+                  animation-delay: 2.4s;
+                "
+              ></span>
+              <span
+                class="particle"
+                style="left: 50%; animation-duration: 7s; animation-delay: 0.6s"
+              ></span>
+              <span
+                class="particle"
+                style="left: 65%; animation-duration: 6.5s; animation-delay: 3s"
+              ></span>
+              <span
+                class="particle"
+                style="left: 78%; animation-duration: 9s; animation-delay: 1.8s"
+              ></span>
+              <span
+                class="particle"
+                style="left: 90%; animation-duration: 5s; animation-delay: 4s"
+              ></span>
+              <span
+                class="particle"
+                style="
+                  left: 45%;
+                  animation-duration: 7.5s;
+                  animation-delay: 2.8s;
+                "
+              ></span>
+            </div>
+          </div>
+          <div class="pitch-info">
+            <div class="pitch-row">
+              <span class="pitch-label">زمین</span>
+              <span class="pitch-value">فوتسال آریا — سالن ۱</span>
+            </div>
+            <div class="pitch-row">
+              <span class="pitch-label">تاریخ</span>
+              <span class="pitch-value" id="heroDate">یکشنبه ۲۴ خرداد</span>
+            </div>
+            <div class="pitch-row">
+              <span class="pitch-label">ساعت</span>
+              <span class="pitch-value">۲۰:۰۰ — ۲۱:۳۰</span>
+            </div>
+            <div class="pitch-row">
+              <span class="pitch-label">وضعیت</span>
+              <span class="pitch-badge">خالی ✓</span>
+            </div>
+            <button
+              class="pitch-btn"
+              onclick="location.href = './reserve.html'"
+            >
+              رزرو این سانس ←
+            </button>
+          </div>
+        </div>
+
+        <!-- TIMER PILL -->
+        <div class="hero-timer-wrap">
+          <div class="hero-timer" id="heroTimer">
+            <span class="timer-icon">⚡</span>
+            <span id="timerSec">۶۰</span> ثانیه
+          </div>
+          <span class="timer-label">میانگین زمان رزرو</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FIELD LINE DIVIDER -->
+    <div class="field-line"></div>
+
+    <!-- SERVICES -->
+    <section class="services">
+      <span class="sec-label">امکانات</span>
+      <h2 class="sec-title">چرا سانس‌چی؟</h2>
+
+      <div class="grid">
+        <div class="card">
+          <span class="card-icon">⚡</span>
+          <h3>رزرو در ۶۰ ثانیه</h3>
+          <p>
+            بدون نیاز به تماس تلفنی، سانس دلخواهت رو در کمتر از یک دقیقه ثبت کن.
+          </p>
+        </div>
+        <div class="card">
+          <span class="card-icon">🏟️</span>
+          <h3>زمین‌های متنوع</h3>
+          <p>
+            بیش از ۵۰ زمین فوتسال و چمن فوتبال در سراسر شهر، با امکانات کامل.
+          </p>
+        </div>
+        <div class="card">
+          <span class="card-icon">💳</span>
+          <h3>پرداخت امن آنلاین</h3>
+          <p>پرداخت کاملاً امن از طریق درگاه بانکی معتبر، بدون هیچ نگرانی.</p>
+        </div>
+        <div class="card">
+          <span class="card-icon">📅</span>
+          <h3>تقویم هوشمند</h3>
+          <p>ببین کدام سانس‌ها خالی‌ان و بهترین وقت رو برای خودت انتخاب کن.</p>
+        </div>
+        <div class="card">
+          <span class="card-icon">🔔</span>
+          <h3>یادآوری خودکار</h3>
+          <p>
+            قبل از شروع بازی پیامک یادآوری دریافت می‌کنی تا هیچ سانسی از دست
+            نره.
+          </p>
+        </div>
+        <div class="card">
+          <span class="card-icon">🔄</span>
+          <h3>لغو آسان</h3>
+          <p>
+            تا ۲ ساعت قبل از بازی می‌تونی رزرو رو لغو کنی و کامل استرداد بگیری.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FIELD LINE DIVIDER -->
+    <div class="field-line"></div>
+
+    <!-- HOW IT WORKS -->
+    <section class="how">
+      <div style="text-align: center">
+        <span class="sec-label">مراحل رزرو</span>
+        <h2 class="sec-title">چطور کار می‌کنه؟</h2>
+      </div>
+      <div class="how-grid">
+        <div class="how-step">
+          <div class="step-num">۱</div>
+          <h4>زمین رو انتخاب کن</h4>
+          <p>
+            از لیست زمین‌های موجود در شهرت، نزدیک‌ترین و بهترین گزینه رو پیدا
+            کن.
+          </p>
+        </div>
+        <div class="how-step">
+          <div class="step-num">۲</div>
+          <h4>تاریخ و ساعت بزن</h4>
+          <p>تقویم رو ببین و سانس خالی مورد نظرت رو انتخاب کن.</p>
+        </div>
+        <div class="how-step">
+          <div class="step-num">۳</div>
+          <h4>پرداخت رو انجام بده</h4>
+          <p>از طریق درگاه امن بانکی هزینه سانس رو پرداخت کن.</p>
+        </div>
+        <div class="how-step">
+          <div class="step-num">۴</div>
+          <h4>برو بازی کن!</h4>
+          <p>کد رزرو به پیامکت میاد. همین! زمین منتظرته.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <div class="stats">
+      <div class="stat">
+        <h3 data-target="50">0</h3>
+        <p>زمین فعال</p>
+      </div>
+
+      <div class="stat">
+        <h3 data-target="1200">0</h3>
+        <p>کاربر فعال</p>
+      </div>
+
+      <div class="stat">
+        <h3 data-target="8000">0</h3>
+        <p>رزرو موفق</p>
+      </div>
+
+      <div class="stat">
+        <h3 data-target="49">0</h3>
+        <p>امتیاز کاربران</p>
+      </div>
+    </div>
+    <!-- CONTACT -->
+    <section class="contact">
+      <span class="sec-label">تماس با ما</span>
+      <h2 class="sec-title">سوالی داری؟</h2>
+      <p class="contact-sub">هر سوال یا پیشنهادی داری، خوشحال می‌شیم بشنویم.</p>
+
+      <div class="contact-form">
+        <input type="text" placeholder="نام و نام خانوادگی" />
+        <input type="email" placeholder="ایمیل" />
+        <textarea placeholder="پیام شما..."></textarea>
+        <button
+          type="submit"
+          class="btn"
+          style="width: 100%; font-size: 16px; padding: 14px"
+        >
+          ارسال پیام
+        </button>
+      </div>
+    </section>
+
+    <!-- PENALTY GAME SECTION -->
+    <section
+      style="
+        padding: 70px 80px;
+        background: var(--bg-section);
+        border-top: 1px solid var(--green-border);
+        text-align: center;
+      "
+    >
+      <span
+        style="
+          font-size: 11px;
+          font-weight: 700;
+          color: var(--green);
+          letter-spacing: 2.5px;
+          text-transform: uppercase;
+          display: block;
+          margin-bottom: 10px;
+        "
+        >مینی‌گیم</span
+      >
+      <h2 style="font-size: 32px; font-weight: 900; margin-bottom: 10px">
+        پنالتی بزن،
+        <em style="font-style: normal; color: var(--green)">جایزه ببر!</em>
+      </h2>
+      <p
+        style="
+          font-size: 15px;
+          color: var(--text-body);
+          margin-bottom: 32px;
+          max-width: 420px;
+          margin-left: auto;
+          margin-right: auto;
+        "
+      >
+        با بازی پنالتی سانس‌چی مهارتت رو نشون بده. ۵ شوت داری!
+      </p>
+      <a
+        href="./penalty.html"
+        style="
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          background: var(--green);
+          color: #04100a;
+          padding: 14px 36px;
+          border-radius: 12px;
+          font-weight: 800;
+          font-size: 16px;
+          text-decoration: none;
+          box-shadow: 0 0 28px rgba(34, 197, 94, 0.35);
+          transition:
+            background 0.2s,
+            box-shadow 0.2s,
+            transform 0.15s;
+        "
+        onmouseover="
+          this.style.background = 'var(--green-dim)';
+          this.style.transform = 'translateY(-2px)';
+        "
+        onmouseout="
+          this.style.background = 'var(--green)';
+          this.style.transform = 'translateY(0)';
+        "
+      >
+        ⚽ شروع بازی پنالتی
+      </a>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>© ۱۴۰۵ تمامی حقوق متعلق به <span>سانس‌چی</span> است.</p>
+    </footer>
+
+    <button id="topBtn">↑</button>
+
+    <script src="../assets/js/script.js"></script>
+  </body>
+</html>

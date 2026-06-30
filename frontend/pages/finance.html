@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="fa">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>سانس‌چی | داشبورد مالی صاحب زمین</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/finance.css" />
+    <link rel="stylesheet" href="../assets/css/responsive.css" />
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav class="nav">
+      <div class="logo"><span class="logo-dot"></span>سانس‌چی</div>
+      <div class="nav-links">
+        <a href="./owner.html">پنل صاحب زمین</a>
+        <a href="./settlement.html">تسویه‌ها</a>
+        <button class="danger" onclick="logout()">خروج</button>
+      </div>
+    </nav>
+
+    <div class="wrap">
+      <!-- HERO -->
+      <div class="hero">
+        <div class="hero-badge">🔒 شفافیت کامل</div>
+        <div class="hero-eyebrow">داشبورد مالی صاحب زمین</div>
+        <h1>دقیقاً ببین هر تومان از کجا می‌آید و چقدر سهم توست</h1>
+        <p>
+          برای هر سانس، مبلغی که مشتری می‌پردازد، کارمزد سانس‌چی و سهم خالص شما
+          به‌صورت کاملاً شفاف تفکیک می‌شود — بدون هیچ رقم پنهان.
+        </p>
+      </div>
+
+      <div class="demo-flag" id="demoFlag">
+        ⚠️ حالت نمایشی: اتصال به سرور برقرار نشد، داده‌های نمونه نمایش داده
+        می‌شود.
+      </div>
+
+      <!-- CONTROLS -->
+      <div class="controls">
+        <div class="ctrl">
+          <label>زمین</label>
+          <select id="pitchSel" onchange="onPitchChange()"></select>
+        </div>
+        <div class="ctrl">
+          <label>بازه زمانی</label>
+          <select id="periodSel" onchange="render()">
+            <option value="all">همه زمان‌ها</option>
+            <option value="day">امروز</option>
+            <option value="week">۷ روز اخیر</option>
+            <option value="month">۳۰ روز اخیر</option>
+            <option value="year">یک سال اخیر</option>
+          </select>
+        </div>
+        <div class="spacer"></div>
+        <button class="btn ghost" onclick="exportCSV()">⬇ خروجی CSV</button>
+        <button class="btn" onclick="window.print()">🖨 چاپ گزارش</button>
+      </div>
+
+      <!-- KPIs -->
+      <div class="kpi-grid" id="kpiGrid"></div>
+
+      <!-- MONEY FLOW -->
+      <div class="panel">
+        <div class="panel-title">💸 جریان پول هر سانس (میانگین)</div>
+        <div class="panel-sub">
+          نمایش شفاف اینکه از هر سانس پرداخت‌شده، چقدر کارمزد سانس‌چی است و چقدر
+          به حساب شما می‌رسد.
+        </div>
+        <div class="flow">
+          <div class="flow-step fs-customer">
+            <div class="fs-cap">👤 مشتری می‌پردازد</div>
+            <div class="fs-amt k-blue" id="flowCustomer">۰</div>
+            <div class="fs-sub">تومان / سانس</div>
+          </div>
+          <div class="flow-arrow">←</div>
+          <div class="flow-step fs-commission">
+            <div class="fs-cap">🏷️ کارمزد سانس‌چی</div>
+            <div class="fs-amt k-amber" id="flowComm">۰</div>
+            <div class="fs-sub" id="flowCommPct">۰٪</div>
+          </div>
+          <div class="flow-arrow">←</div>
+          <div class="flow-step fs-owner">
+            <div class="fs-cap">✅ به حساب شما</div>
+            <div class="fs-amt k-green" id="flowOwner">۰</div>
+            <div class="fs-sub" id="flowOwnerPct">۰٪</div>
+          </div>
+        </div>
+        <div class="flow-bar" id="flowBar"></div>
+        <div class="flow-legend">
+          <span><i style="background: var(--green)"></i>سهم شما</span>
+          <span><i style="background: var(--amber)"></i>کارمزد سانس‌چی</span>
+        </div>
+      </div>
+
+      <!-- CHART -->
+      <div class="panel">
+        <div class="panel-title">📈 روند سهم خالص شما</div>
+        <div class="panel-sub" id="chartSub">درآمد خالص به تفکیک روز</div>
+        <div class="chart-wrap">
+          <canvas id="revChart" height="220"></canvas>
+        </div>
+      </div>
+
+      <!-- LEDGER -->
+      <div class="panel">
+        <div class="panel-title">🧾 دفتر شفاف رزروها</div>
+        <div class="panel-sub">
+          هر ردیف نشان می‌دهد مشتری چقدر پرداخت کرده، کارمزد سانس‌چی چقدر بوده و
+          سهم خالص شما چقدر است.
+        </div>
+        <div class="seg-tabs" id="segTabs">
+          <button
+            class="seg-tab active"
+            data-f="paid"
+            onclick="setFilter('paid')"
+          >
+            پرداخت‌شده
+          </button>
+          <button
+            class="seg-tab"
+            data-f="pending"
+            onclick="setFilter('pending')"
+          >
+            در انتظار پرداخت
+          </button>
+          <button
+            class="seg-tab"
+            data-f="cancelled"
+            onclick="setFilter('cancelled')"
+          >
+            لغوشده
+          </button>
+          <button class="seg-tab" data-f="all" onclick="setFilter('all')">
+            همه
+          </button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>تاریخ</th>
+                <th>ساعت</th>
+                <th>کد</th>
+                <th>مشتری پرداخت</th>
+                <th>کارمزد سانس‌چی</th>
+                <th>سهم شما</th>
+                <th>وضعیت</th>
+              </tr>
+            </thead>
+            <tbody id="ledgerBody"></tbody>
+            <tfoot id="ledgerFoot"></tfoot>
+          </table>
+        </div>
+      </div>
+
+      <!-- SETTLEMENTS -->
+      <div class="panel">
+        <div class="panel-title">🏦 وضعیت تسویه‌ها</div>
+        <div class="panel-sub">
+          مراحل تسویهٔ مالی بین شما و سانس‌چی — از تولید تا واریز نهایی به حساب
+          شما.
+        </div>
+        <div class="settle-list" id="settleList"></div>
+      </div>
+
+      <div class="note">
+        💚 سانس‌چی متعهد به شفافیت کامل مالی است — همهٔ ارقام مستقیماً از
+        تراکنش‌های واقعی شما محاسبه می‌شوند.
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="../assets/js/finance.js"></script>
+  </body>
+</html>

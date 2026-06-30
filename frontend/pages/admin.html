@@ -1,0 +1,1085 @@
+<!doctype html>
+<html lang="fa">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>سانس‌چی | پنل مدیریت</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/admin.css" />
+    <link rel="stylesheet" href="../assets/css/responsive.css" />
+  </head>
+  <body>
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="topbar-logo">
+        <div class="logo-dot"></div>
+        سانس‌چی
+        <span class="topbar-badge">پنل مدیریت</span>
+      </div>
+      <div class="topbar-actions">
+        <div class="save-status" id="saveStatus">
+          <div class="status-dot"></div>
+          <span id="saveStatusText">همه تغییرات اعمال شده</span>
+        </div>
+        <button
+          class="export-btn"
+          onclick="
+            showPanel('export');
+            buildExport();
+          "
+        >
+          📋 خروجی کد
+        </button>
+        <a
+          href="./admin-finance.html"
+          class="logout-btn"
+          style="
+            text-decoration: none;
+            color: var(--green);
+            border-color: rgba(34, 197, 94, 0.4);
+          "
+          >💰 داشبورد مالی</a
+        >
+        <button class="logout-btn" onclick="adminLogout()">خروج</button>
+      </div>
+    </div>
+
+    <div class="layout">
+      <!-- SIDEBAR -->
+      <div class="sidebar">
+        <span class="sidebar-label">تنظیمات</span>
+        <div
+          class="nav-item active"
+          onclick="showPanel('pitches')"
+          id="nav-pitches"
+        >
+          <span class="ni-icon">🏟️</span> زمین‌ها
+        </div>
+        <div class="nav-item" onclick="showPanel('addpitch')" id="nav-addpitch">
+          <span class="ni-icon">➕</span> افزودن زمین جدید
+        </div>
+        <div class="nav-item" onclick="showPanel('slots')" id="nav-slots">
+          <span class="ni-icon">⏰</span> سانس‌ها و قیمت‌ها
+        </div>
+        <div
+          class="nav-item"
+          onclick="
+            showPanel('reservations');
+            loadAdminReservations();
+          "
+          id="nav-reservations"
+        >
+          <span class="ni-icon">📑</span> رزروها
+        </div>
+        <div
+          class="nav-item"
+          onclick="
+            showPanel('revenue');
+            initRevenuePanel();
+          "
+          id="nav-revenue"
+        >
+          <span class="ni-icon">💰</span> درآمد و آمار
+        </div>
+        <!-- تسویه‌ها -->
+        <div
+          class="nav-item"
+          onclick="
+            showPanel('settlements');
+            loadAdminSettlements();
+          "
+          id="nav-settlements"
+        >
+          <span class="ni-icon">🏦</span> تسویه‌ها
+        </div>
+        <!-- اتصال مالک -->
+        <div
+          class="nav-item"
+          onclick="
+            showPanel('owners');
+            loadOwnerManagement();
+          "
+          id="nav-owners"
+        >
+          <span class="ni-icon">👤</span> مالکیت زمین‌ها
+        </div>
+        <div class="nav-divider"></div>
+        <span class="sidebar-label">خروجی</span>
+        <div
+          class="nav-item"
+          onclick="
+            showPanel('export');
+            buildExport();
+          "
+          id="nav-export"
+        >
+          <span class="ni-icon">📋</span> خروجی کد
+        </div>
+        <div
+          class="nav-item"
+          onclick="window.open('./index.html', '_blank')"
+          id="nav-preview"
+        >
+          <span class="ni-icon">👁️</span> پیش‌نمایش سایت
+        </div>
+        <div class="nav-divider"></div>
+        <span class="sidebar-label" style="color: var(--red)">خطرناک</span>
+        <div
+          class="nav-item"
+          onclick="showPanel('reset')"
+          id="nav-reset"
+          style="color: var(--red)"
+        >
+          <span class="ni-icon">🗑️</span> پاکسازی داده‌ها
+        </div>
+      </div>
+
+      <!-- CONTENT -->
+      <div class="content">
+        <!-- ═══ ADD PITCH PANEL ═══ -->
+        <div class="panel" id="panel-addpitch">
+          <div class="panel-title">افزودن <em>زمین جدید</em></div>
+          <div class="panel-sub">
+            اطلاعات زمین رو وارد کن و عکسش رو آپلود کن — به محض ثبت، خودکار روی
+            صفحه «رزرو» و «گالری» هم نمایش داده می‌شه.
+          </div>
+
+          <div class="add-pitch-box">
+            <div
+              class="ap-img-upload"
+              id="apImgUpload"
+              onclick="document.getElementById('apImgInput').click()"
+            >
+              <img id="apImgPreview" style="display: none" />
+              <span id="apImgPlaceholder"
+                >📷 کلیک کن و یه عکس از زمین انتخاب کن<br /><span
+                  style="font-size: 11px; opacity: 0.7"
+                  >حداکثر ۴ مگابایت</span
+                ></span
+              >
+            </div>
+            <input
+              type="file"
+              id="apImgInput"
+              accept="image/*"
+              style="display: none"
+              onchange="handleApImage(event)"
+            />
+
+            <div class="cfg-row-inline">
+              <div class="cfg-row">
+                <span class="cfg-label">نام زمین</span>
+                <input
+                  class="cfg-input"
+                  id="apName"
+                  placeholder="مثلاً سالن فوتسال نور"
+                />
+              </div>
+              <div class="cfg-row">
+                <span class="cfg-label">نوع</span>
+                <select class="cfg-input" id="apType">
+                  <option value="futsal">فوتسال</option>
+                  <option value="grass">چمن</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="cfg-row-inline">
+              <div class="cfg-row">
+                <span class="cfg-label">ظرفیت</span>
+                <select class="cfg-input" id="apSize">
+                  <option value="5">۵ نفره</option>
+                  <option value="7">۷ نفره</option>
+                  <option value="11">۱۱ نفره</option>
+                </select>
+              </div>
+              <div class="cfg-row">
+                <span class="cfg-label">قیمت پایه (تومان)</span>
+                <input
+                  class="cfg-input price-inp"
+                  type="number"
+                  id="apPrice"
+                  placeholder="۲۰۰۰۰۰"
+                  step="10000"
+                />
+              </div>
+            </div>
+
+            <div class="cfg-row">
+              <span class="cfg-label">آدرس</span>
+              <input
+                class="cfg-input"
+                id="apAddress"
+                placeholder="آدرس کامل زمین"
+              />
+            </div>
+
+            <div class="cfg-row">
+              <span class="cfg-label">توضیحات</span>
+              <input
+                class="cfg-input"
+                id="apDesc"
+                placeholder="توضیح کوتاه درباره زمین"
+              />
+            </div>
+
+            <div class="cfg-row">
+              <span class="cfg-label">تگ‌ها (با کاما جدا کن)</span>
+              <input
+                class="cfg-input"
+                id="apTags"
+                placeholder="سرپوشیده، رختکن، نور مصنوعی"
+              />
+            </div>
+
+            <button
+              class="pcfg-save-btn"
+              id="apSubmitBtn"
+              onclick="createPitch()"
+              style="margin-top: 6px"
+            >
+              ✓ ثبت زمین جدید
+            </button>
+            <div class="save-msg" id="apMsg"></div>
+          </div>
+        </div>
+
+        <!-- ═══ PITCHES PANEL ═══ -->
+        <div class="panel active" id="panel-pitches">
+          <div class="panel-title">مدیریت <em>زمین‌ها</em></div>
+          <div class="panel-sub">
+            تغییرات هر زمین، با دکمهٔ «اعمال تغییرات» مستقیماً روی سرور
+            (MongoDB) ذخیره می‌شه
+          </div>
+          <div class="pitches-grid" id="pitchesGrid"></div>
+        </div>
+
+        <!-- ═══ SLOTS PANEL ═══ -->
+        <div class="panel" id="panel-slots">
+          <div class="panel-title">سانس‌ها و <em>قیمت‌ها</em></div>
+          <div class="panel-sub">
+            یه زمین رو انتخاب کن و قیمت هر سانس رو مخصوص همون زمین تنظیم کن —
+            برای ذخیره روی سرور، بعداً وارد پنل «زمین‌ها» شو و «اعمال تغییرات
+            این زمین» رو بزن
+          </div>
+
+          <div class="bulk-bar">
+            <div class="bulk-grp" style="flex: 1; min-width: 240px">
+              <label>زمین</label>
+              <select
+                class="bulk-sel"
+                id="slotsPitchSelect"
+                onchange="onSlotsPitchChange(this.value)"
+                style="width: 100%"
+              ></select>
+            </div>
+          </div>
+
+          <div class="bulk-bar">
+            <div>
+              <h4>تغییر دسته‌جمعی</h4>
+              <p>قیمت یه بازه رو فقط برای همین زمین یکجا عوض کن</p>
+            </div>
+            <div class="bulk-grp">
+              <label>بازه زمانی</label>
+              <select class="bulk-sel" id="bulkPeriod">
+                <option value="morning">صبح و ظهر (سانس ۱–۷)</option>
+                <option value="evening">عصر و شب (سانس ۸–۱۱)</option>
+                <option value="all">همه سانس‌ها</option>
+              </select>
+            </div>
+            <div class="bulk-grp">
+              <label>قیمت جدید (تومان)</label>
+              <input
+                type="number"
+                class="bulk-inp"
+                id="bulkPrice"
+                value="550000"
+                step="10000"
+              />
+            </div>
+            <button class="bulk-apply" onclick="applyBulkPrice()">
+              اعمال روی این زمین
+            </button>
+          </div>
+
+          <div class="slots-table-wrap">
+            <table class="slots-table">
+              <thead>
+                <tr>
+                  <th style="width: 40px">#</th>
+                  <th>بازه زمانی</th>
+                  <th>قیمت (تومان)</th>
+                  <th>دسته</th>
+                </tr>
+              </thead>
+              <tbody id="slotsTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ═══ RESERVATIONS PANEL ═══ -->
+        <div class="panel" id="panel-reservations">
+          <div class="panel-title">مدیریت <em>رزروها</em></div>
+          <div class="panel-sub">
+            همه رزروهای ثبت‌شده روی همه زمین‌ها — هر رزروی رو می‌تونی لغو کنی
+            (حتی اگه قبلاً پرداخت شده باشه)
+          </div>
+
+          <div class="bulk-bar">
+            <div class="bulk-grp" style="flex: 1; min-width: 220px">
+              <label>فیلتر زمین</label>
+              <select
+                class="bulk-sel"
+                id="resPitchFilter"
+                onchange="renderAdminReservations()"
+                style="width: 100%"
+              >
+                <option value="">همه زمین‌ها</option>
+              </select>
+            </div>
+            <div class="bulk-grp">
+              <label>وضعیت</label>
+              <select
+                class="bulk-sel"
+                id="resStatusFilter"
+                onchange="renderAdminReservations()"
+              >
+                <option value="">همه</option>
+                <option value="pending">در انتظار پرداخت</option>
+                <option value="paid">پرداخت‌شده</option>
+                <option value="cancelled">لغو شده</option>
+              </select>
+            </div>
+            <button
+              class="bulk-apply"
+              onclick="loadAdminReservations()"
+              style="align-self: flex-end"
+            >
+              🔄 رفرش
+            </button>
+          </div>
+
+          <div class="slots-table-wrap">
+            <table class="slots-table">
+              <thead>
+                <tr>
+                  <th>کاربر</th>
+                  <th>زمین</th>
+                  <th>تاریخ</th>
+                  <th>ساعت</th>
+                  <th>مبلغ</th>
+                  <th>وضعیت</th>
+                  <th style="width: 170px">عملیات</th>
+                </tr>
+              </thead>
+              <tbody id="reservationsTableBody">
+                <tr>
+                  <td
+                    colspan="7"
+                    style="
+                      text-align: center;
+                      padding: 30px;
+                      color: var(--muted);
+                    "
+                  >
+                    برای بارگذاری رزروها روی «رزروها» در منوی کناری کلیک کن
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ═══ REVENUE PANEL ═══ -->
+        <div class="panel" id="panel-revenue">
+          <div class="panel-title">درآمد و <em>آمار</em></div>
+          <div class="panel-sub">
+            جمع مبالغ رزروهای پرداختی به تفکیک بازه زمانی — کمیسیون سانس‌چی جدا
+            از سود اونرها
+          </div>
+
+          <div class="rev-period-tabs">
+            <button
+              class="rev-tab active"
+              id="rev-tab-all"
+              onclick="switchRevPeriod('all')"
+            >
+              همه
+            </button>
+            <button
+              class="rev-tab"
+              id="rev-tab-day"
+              onclick="switchRevPeriod('day')"
+            >
+              امروز
+            </button>
+            <button
+              class="rev-tab"
+              id="rev-tab-week"
+              onclick="switchRevPeriod('week')"
+            >
+              این هفته
+            </button>
+            <button
+              class="rev-tab"
+              id="rev-tab-month"
+              onclick="switchRevPeriod('month')"
+            >
+              این ماه
+            </button>
+            <button
+              class="rev-tab"
+              id="rev-tab-year"
+              onclick="switchRevPeriod('year')"
+            >
+              این سال
+            </button>
+          </div>
+
+          <!-- ── خلاصه مالی سانس‌چی ── -->
+          <div
+            style="
+              background: linear-gradient(
+                135deg,
+                rgba(34, 197, 94, 0.08),
+                rgba(34, 197, 94, 0.03)
+              );
+              border: 1px solid var(--green-border);
+              border-radius: 14px;
+              padding: 18px 22px;
+              margin-bottom: 20px;
+              display: flex;
+              align-items: stretch;
+              gap: 0;
+              overflow: hidden;
+            "
+          >
+            <div
+              style="
+                flex: 1;
+                padding: 14px 20px;
+                text-align: center;
+                border-left: 1px solid var(--green-border);
+              "
+            >
+              <div
+                style="
+                  font-size: 10px;
+                  color: var(--muted);
+                  font-weight: 700;
+                  letter-spacing: 0.5px;
+                  margin-bottom: 8px;
+                "
+              >
+                💵 کل دریافتی از مشتری
+              </div>
+              <div
+                style="font-size: 26px; font-weight: 900; color: var(--text)"
+                id="rev-fin-gross"
+              >
+                ۰
+              </div>
+              <div style="font-size: 11px; color: var(--body); margin-top: 4px">
+                تومان
+              </div>
+            </div>
+            <div
+              style="
+                flex: 1;
+                padding: 14px 20px;
+                text-align: center;
+                border-left: 1px solid var(--green-border);
+                background: rgba(245, 158, 11, 0.04);
+              "
+            >
+              <div
+                style="
+                  font-size: 10px;
+                  color: var(--muted);
+                  font-weight: 700;
+                  letter-spacing: 0.5px;
+                  margin-bottom: 8px;
+                "
+              >
+                🏷️ کمیسیون سانس‌چی
+              </div>
+              <div
+                style="font-size: 26px; font-weight: 900; color: var(--amber)"
+                id="rev-fin-commission"
+              >
+                ۰
+              </div>
+              <div
+                style="font-size: 11px; color: var(--body); margin-top: 4px"
+                id="rev-fin-commission-sub"
+              >
+                تومان
+              </div>
+            </div>
+            <div
+              style="
+                flex: 1;
+                padding: 14px 20px;
+                text-align: center;
+                background: rgba(34, 197, 94, 0.06);
+              "
+            >
+              <div
+                style="
+                  font-size: 10px;
+                  color: var(--muted);
+                  font-weight: 700;
+                  letter-spacing: 0.5px;
+                  margin-bottom: 8px;
+                "
+              >
+                💸 سود خالص اونرها
+              </div>
+              <div
+                style="font-size: 26px; font-weight: 900; color: var(--green)"
+                id="rev-fin-net"
+              >
+                ۰
+              </div>
+              <div style="font-size: 11px; color: var(--body); margin-top: 4px">
+                تومان
+              </div>
+            </div>
+          </div>
+
+          <div class="rev-metrics">
+            <div class="rev-mcard">
+              <div class="rm-label">💰 درآمد ناخالص (پرداختی)</div>
+              <div class="rm-value" id="rev-m-revenue">۰</div>
+              <div class="rm-sub" id="rev-m-rev-sub">تومان</div>
+            </div>
+            <div
+              class="rev-mcard"
+              style="border-color: rgba(245, 158, 11, 0.25)"
+            >
+              <div class="rm-label" style="color: var(--amber)">
+                🏷️ کمیسیون سانس‌چی
+              </div>
+              <div
+                class="rm-value"
+                style="color: var(--amber)"
+                id="rev-m-commission"
+              >
+                ۰
+              </div>
+              <div class="rm-sub">تومان</div>
+            </div>
+            <div class="rev-mcard">
+              <div class="rm-label">✅ رزروهای پرداختی</div>
+              <div class="rm-value" id="rev-m-paid">۰</div>
+              <div class="rm-sub" id="rev-m-paid-sub">رزرو</div>
+            </div>
+            <div class="rev-mcard">
+              <div class="rm-label">⏳ در انتظار پرداخت</div>
+              <div class="rm-value" id="rev-m-pending">۰</div>
+              <div class="rm-sub" id="rev-m-pend-sub">رزرو</div>
+            </div>
+          </div>
+
+          <div class="rev-chart-box">
+            <div class="rev-chart-head">
+              <span class="rev-chart-title" id="rev-chart-title"
+                >نمودار درآمد</span
+              >
+              <div class="rev-legend">
+                <span
+                  ><span class="rev-leg-dot" style="background: #22c55e"></span
+                  >ناخالص</span
+                >
+                <span
+                  ><span class="rev-leg-dot" style="background: #f59e0b"></span
+                  >کمیسیون سانس‌چی</span
+                >
+                <span
+                  ><span class="rev-leg-dot" style="background: #3b82f6"></span
+                  >در انتظار</span
+                >
+              </div>
+            </div>
+            <div class="rev-chart-wrap">
+              <canvas
+                id="revChart"
+                role="img"
+                aria-label="نمودار درآمد رزروها"
+              ></canvas>
+            </div>
+          </div>
+
+          <!-- کمیسیون به تفکیک زمین -->
+          <div class="rev-split" style="margin-bottom: 18px">
+            <div
+              class="rev-split-box"
+              style="border-color: rgba(245, 158, 11, 0.25)"
+            >
+              <div class="rev-split-title">
+                🏷️ کمیسیون سانس‌چی به تفکیک زمین
+              </div>
+              <div id="rev-commission-list">
+                <div
+                  style="
+                    color: var(--muted);
+                    font-size: 12px;
+                    text-align: center;
+                    padding: 20px;
+                  "
+                >
+                  در حال بارگذاری...
+                </div>
+              </div>
+            </div>
+            <div class="rev-split-box">
+              <div class="rev-split-title">💵 درآمد ناخالص به تفکیک زمین</div>
+              <div id="rev-pitch-list">
+                <div
+                  style="
+                    color: var(--muted);
+                    font-size: 12px;
+                    text-align: center;
+                    padding: 20px;
+                  "
+                >
+                  در حال بارگذاری...
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="rev-split">
+            <div class="rev-split-box">
+              <div class="rev-split-title">⭐ پرفروش‌ترین سانس‌ها</div>
+              <div id="rev-slot-list">
+                <div
+                  style="
+                    color: var(--muted);
+                    font-size: 12px;
+                    text-align: center;
+                    padding: 20px;
+                  "
+                >
+                  در حال بارگذاری...
+                </div>
+              </div>
+            </div>
+            <div
+              class="rev-split-box"
+              style="border-color: rgba(245, 158, 11, 0.25)"
+            >
+              <div class="rev-split-title">
+                📊 میانگین کمیسیون به تفکیک زمین
+              </div>
+              <div id="rev-avg-commission-list">
+                <div
+                  style="
+                    color: var(--muted);
+                    font-size: 12px;
+                    text-align: center;
+                    padding: 20px;
+                  "
+                >
+                  در حال بارگذاری...
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ EXPORT PANEL ═══ -->
+        <div class="panel" id="panel-export">
+          <div class="panel-title">خروجی <em>کد</em></div>
+
+          <div class="panel-sub">لیست زمین‌ها و وضعیت مالکیت</div>
+          <div class="slots-table-wrap">
+            <table class="slots-table" id="ownerTable">
+              <thead>
+                <tr>
+                  <th>زمین</th>
+                  <th>نوع</th>
+                  <th>صاحب فعلی</th>
+                  <th>شماره صاحب</th>
+                  <th>وضعیت</th>
+                </tr>
+              </thead>
+              <tbody id="ownerTbody"></tbody>
+            </table>
+          </div>
+        </div>
+        <!-- ──── SETTLEMENTS PANEL ──── -->
+        <div class="panel" id="panel-settlements">
+          <div class="panel-title">مدیریت <em>تسویه‌ها</em></div>
+          <div class="panel-sub">
+            مشاهده و مدیریت درخواست‌های تسویه صاحبان زمین
+          </div>
+
+          <div
+            style="
+              display: flex;
+              gap: 12px;
+              flex-wrap: wrap;
+              margin-bottom: 20px;
+            "
+          >
+            <input
+              type="text"
+              id="settlementDateFilter"
+              placeholder="تاریخ (مثال: 1403/03/24)"
+              style="
+                background: #0a1a10;
+                border: 1.5px solid var(--green-border);
+                border-radius: 8px;
+                color: var(--text);
+                font-family: inherit;
+                font-size: 13px;
+                padding: 9px 14px;
+                outline: none;
+                width: 180px;
+                direction: ltr;
+                text-align: right;
+              "
+            />
+            <select
+              id="settlementStatusFilter"
+              style="
+                background: #0a1a10;
+                border: 1.5px solid var(--green-border);
+                border-radius: 8px;
+                color: var(--text);
+                font-family: inherit;
+                font-size: 13px;
+                padding: 9px 14px;
+                outline: none;
+              "
+            >
+              <option value="">همه وضعیت‌ها</option>
+              <option value="pending">در انتظار</option>
+              <option value="approved">تأیید شده</option>
+              <option value="paid">پرداخت شده</option>
+              <option value="rejected">رد شده</option>
+            </select>
+            <button
+              onclick="loadAdminSettlements()"
+              style="
+                padding: 9px 20px;
+                background: var(--green);
+                color: #04100a;
+                border: none;
+                border-radius: 8px;
+                font-family: inherit;
+                font-size: 13px;
+                font-weight: 700;
+                cursor: pointer;
+              "
+            >
+              🔍 جستجو
+            </button>
+          </div>
+
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+              gap: 14px;
+              margin-bottom: 24px;
+            "
+            id="settlementStats"
+          ></div>
+
+          <div class="slots-table-wrap">
+            <table class="slots-table" id="settlementTable">
+              <thead>
+                <tr>
+                  <th>زمین</th>
+                  <th>صاحب زمین</th>
+                  <th>تاریخ</th>
+                  <th>ناخالص</th>
+                  <th>کمیسیون</th>
+                  <th>خالص</th>
+                  <th>رزروها</th>
+                  <th>وضعیت</th>
+                  <th>عملیات</th>
+                </tr>
+              </thead>
+              <tbody id="settlementTbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ──── OWNER MANAGEMENT PANEL ──── -->
+        <div class="panel" id="panel-owners">
+          <div class="panel-title">مدیریت <em>مالکیت زمین‌ها</em></div>
+          <!-- ──── RESET DATA PANEL ──── -->
+          <div class="panel" id="panel-reset">
+            <div class="panel-title" style="color: var(--red)">
+              ⚠️ پاکسازی <em style="color: var(--red)">داده‌ها</em>
+            </div>
+            <div class="panel-sub">
+              این عملیات‌ها برگشت‌ناپذیر هستند. قبل از اجرا مطمئن باش.
+            </div>
+
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                max-width: 500px;
+              "
+            >
+              <div
+                style="
+                  background: rgba(239, 68, 68, 0.07);
+                  border: 1px solid rgba(239, 68, 68, 0.25);
+                  border-radius: 12px;
+                  padding: 20px;
+                "
+              >
+                <div style="font-weight: 700; margin-bottom: 6px">
+                  🗑️ پاک کردن همه رزروها
+                </div>
+                <div
+                  style="
+                    font-size: 12px;
+                    color: var(--body);
+                    margin-bottom: 14px;
+                  "
+                >
+                  تمام رزروها از دیتابیس پاک میشن. داده‌های زمین‌ها دست نخورده
+                  می‌مونن.
+                </div>
+                <button
+                  onclick="resetData('reservations')"
+                  style="
+                    padding: 9px 20px;
+                    background: var(--red);
+                    color: #fff;
+                    border: none;
+                    border-radius: 8px;
+                    font-family: inherit;
+                    font-size: 13px;
+                    font-weight: 700;
+                    cursor: pointer;
+                  "
+                >
+                  پاک کردن رزروها
+                </button>
+              </div>
+
+              <div
+                style="
+                  background: rgba(239, 68, 68, 0.07);
+                  border: 1px solid rgba(239, 68, 68, 0.25);
+                  border-radius: 12px;
+                  padding: 20px;
+                "
+              >
+                <div style="font-weight: 700; margin-bottom: 6px">
+                  🗑️ پاک کردن همه تسویه‌ها
+                </div>
+                <div
+                  style="
+                    font-size: 12px;
+                    color: var(--body);
+                    margin-bottom: 14px;
+                  "
+                >
+                  تمام رکوردهای تسویه مالی پاک میشن.
+                </div>
+                <button
+                  onclick="resetData('settlements')"
+                  style="
+                    padding: 9px 20px;
+                    background: var(--red);
+                    color: #fff;
+                    border: none;
+                    border-radius: 8px;
+                    font-family: inherit;
+                    font-size: 13px;
+                    font-weight: 700;
+                    cursor: pointer;
+                  "
+                >
+                  پاک کردن تسویه‌ها
+                </button>
+              </div>
+
+              <div
+                style="
+                  background: rgba(239, 68, 68, 0.15);
+                  border: 2px solid rgba(239, 68, 68, 0.4);
+                  border-radius: 12px;
+                  padding: 20px;
+                "
+              >
+                <div style="font-weight: 700; margin-bottom: 6px">
+                  ☢️ ریست کامل
+                </div>
+                <div
+                  style="
+                    font-size: 12px;
+                    color: var(--body);
+                    margin-bottom: 14px;
+                  "
+                >
+                  همه رزروها، تسویه‌ها، و DailyAvailability پاک میشن. زمین‌ها و
+                  کاربران باقی می‌مونن.
+                </div>
+                <button
+                  onclick="resetData('all')"
+                  style="
+                    padding: 9px 20px;
+                    background: var(--red);
+                    color: #fff;
+                    border: 2px solid #ef4444;
+                    border-radius: 8px;
+                    font-family: inherit;
+                    font-size: 13px;
+                    font-weight: 700;
+                    cursor: pointer;
+                  "
+                >
+                  ریست کامل
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-sub">
+            این بخش
+
+            <div class="panel-sub">اتصال یا جدا کردن صاحب زمین به هر زمین</div>
+
+            <div style="margin-bottom: 24px">
+              <div
+                style="
+                  display: flex;
+                  gap: 12px;
+                  flex-wrap: wrap;
+                  align-items: flex-end;
+                "
+              >
+                <div>
+                  <label
+                    style="
+                      display: block;
+                      font-size: 11px;
+                      color: var(--muted);
+                      margin-bottom: 4px;
+                    "
+                    >انتخاب زمین</label
+                  >
+                  <select
+                    id="ownerPitchSelect"
+                    style="
+                      background: #0a1a10;
+                      border: 1.5px solid var(--green-border);
+                      border-radius: 8px;
+                      color: var(--text);
+                      font-family: inherit;
+                      font-size: 13px;
+                      padding: 9px 14px;
+                      outline: none;
+                      min-width: 220px;
+                    "
+                  >
+                    <option value="">ابتدا زمین را انتخاب کنید</option>
+                  </select>
+                </div>
+                <div>
+                  <label
+                    style="
+                      display: block;
+                      font-size: 11px;
+                      color: var(--muted);
+                      margin-bottom: 4px;
+                    "
+                    >شماره موبایل صاحب جدید</label
+                  >
+                  <input
+                    type="tel"
+                    id="ownerPhoneInput"
+                    placeholder="09123456789"
+                    style="
+                      background: #0a1a10;
+                      border: 1.5px solid var(--green-border);
+                      border-radius: 8px;
+                      color: var(--text);
+                      font-family: inherit;
+                      font-size: 13px;
+                      padding: 9px 14px;
+                      outline: none;
+                      width: 200px;
+                      direction: ltr;
+                      text-align: right;
+                    "
+                  />
+                </div>
+                <button
+                  onclick="assignOwner()"
+                  style="
+                    padding: 9px 20px;
+                    background: var(--green);
+                    color: #04100a;
+                    border: none;
+                    border-radius: 8px;
+                    font-family: inherit;
+                    font-size: 13px;
+                    font-weight: 700;
+                    cursor: pointer;
+                  "
+                >
+                  ✅ اتصال مالک
+                </button>
+                <button
+                  onclick="removeOwner()"
+                  style="
+                    padding: 9px 20px;
+                    background: transparent;
+                    color: var(--red);
+                    border: 1.5px solid var(--red);
+                    border-radius: 8px;
+                    font-family: inherit;
+                    font-size: 13px;
+                    font-weight: 700;
+                    cursor: pointer;
+                  "
+                >
+                  ❌ حذف مالک
+                </button>
+              </div>
+              <div
+                id="ownerResult"
+                style="margin-top: 12px; font-size: 13px"
+              ></div>
+            </div>
+
+            فقط برای پشتیبان‌گیری دستیه — داده‌های اصلی الان روی سرور (MongoDB)
+            ذخیره می‌شن، نه اینجا.
+          </div>
+          <div class="export-wrap">
+            <div class="export-head">
+              <h3>خلاصهٔ وضعیت فعلی زمین‌ها</h3>
+              <button class="copy-btn" onclick="copyExport()">
+                📋 کپی همه
+              </button>
+            </div>
+            <pre class="code-pre" id="exportCode">در حال تولید کد...</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast"></div>
+
+    <script src="../assets/js/admin.js"></script>
+
+    <script src="../assets/js/archive-feature-patch.js"></script>
+  </body>
+</html>

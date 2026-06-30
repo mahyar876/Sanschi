@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="fa">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>سانس‌چی | گالری زمین‌ها</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/gallery.css" />
+    <link rel="stylesheet" href="../assets/css/responsive.css" />
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <header class="header">
+      <div class="logo">
+        <a href="./index.html"><span class="logo-dot"></span>سانس‌چی</a>
+      </div>
+      <ul class="nav">
+        <li><a href="./index.html">خانه</a></li>
+        <li><a href="./gallery.html" class="active">زمین‌ها</a></li>
+        <li><a href="./reserve.html">رزرو</a></li>
+        <li><a href="./about.html">درباره ما</a></li>
+      </ul>
+      <a class="btn" href="./reserve.html">شروع رزرو</a>
+    </header>
+
+    <!-- PAGE HERO -->
+    <div class="page-hero">
+      <div class="hero-inner">
+        <div class="sec-eyebrow"><span></span>گالری زمین‌ها</div>
+        <h1>بهترین <em>زمین‌ها</em> رو پیدا کن</h1>
+        <p id="heroSub">
+          زمین‌های فوتسال و چمن در سراسر شهر — با امکانات کامل و رزرو آنلاین
+        </p>
+      </div>
+    </div>
+
+    <!-- FILTER BAR -->
+    <div class="filter-wrap">
+      <span class="filter-label">نوع:</span>
+      <div class="filter-chips">
+        <button class="chip active" data-filter="all">همه</button>
+        <button class="chip" data-filter="futsal">فوتسال سرپوشیده</button>
+        <button class="chip" data-filter="grass">چمن فوتبال</button>
+      </div>
+      <div class="filter-sep"></div>
+      <span class="filter-label">مرتب‌سازی:</span>
+      <select class="sort-select" id="sortSelect">
+        <option value="default">پیش‌فرض</option>
+        <option value="price-asc">ارزان‌ترین</option>
+        <option value="price-desc">گران‌ترین</option>
+        <option value="avail">بیشترین سانس خالی</option>
+      </select>
+    </div>
+
+    <!-- STATS BAR -->
+    <div class="stats-bar">نمایش <strong id="countDisplay">۰</strong> زمین</div>
+
+    <!-- GALLERY -->
+    <div class="gallery-wrap">
+      <div class="gallery-grid" id="galleryGrid">
+        <div class="loading-state">
+          <div class="loading-spinner"></div>
+          در حال بارگذاری زمین‌ها...
+        </div>
+      </div>
+    </div>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox-overlay" id="lightbox">
+      <div class="lightbox">
+        <button class="lb-close" onclick="closeLightbox()">✕</button>
+        <button class="lb-nav lb-prev" onclick="navLightbox(-1)">›</button>
+        <button class="lb-nav lb-next" onclick="navLightbox(1)">‹</button>
+
+        <div class="lb-img-wrap" id="lbImg"></div>
+
+        <div class="lb-body">
+          <div class="lb-badge" id="lbBadge"></div>
+          <div class="lb-title" id="lbTitle"></div>
+          <div class="lb-info-grid" id="lbInfoGrid"></div>
+          <div class="lb-tags" id="lbTags"></div>
+          <div class="lb-actions">
+            <button class="lb-reserve-btn" id="lbReserveBtn">
+              رزرو این زمین ←
+            </button>
+            <button class="lb-share-btn" onclick="sharePitch()">
+              اشتراک‌گذاری
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>© ۱۴۰۵ تمامی حقوق متعلق به <span>سانس‌چی</span> است.</p>
+    </footer>
+
+    <script src="../assets/js/gallery.js"></script>
+  </body>
+</html>

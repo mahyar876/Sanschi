@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="fa">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>سانس‌چی | داشبورد مالی مدیریت</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/admin-finance.css" />
+    <link rel="stylesheet" href="../assets/css/responsive.css" />
+  </head>
+  <body>
+    <nav class="nav">
+      <div class="logo">
+        <span class="logo-dot"></span>سانس‌چی
+        <span class="topbar-badge">مدیریت</span>
+      </div>
+      <div class="nav-links">
+        <a href="./admin.html">پنل مدیریت</a>
+        <a href="./settlement.html">مدیریت تسویه‌ها</a>
+        <button class="danger" onclick="logout()">خروج</button>
+      </div>
+    </nav>
+
+    <div class="wrap">
+      <div class="hero">
+        <div class="hero-eyebrow">داشبورد مالی مدیریت</div>
+        <h1>درآمد سانس‌چی و گردش مالی کل پلتفرم در یک نگاه</h1>
+        <p>
+          تصویر کامل و شفاف از کمیسیون سانس‌چی، سهم صاحبان زمین، و وضعیت
+          تسویه‌ها — برای تصمیم‌گیری مالی دقیق.
+        </p>
+      </div>
+
+      <div class="demo-flag" id="demoFlag">
+        ⚠️ حالت نمایشی: اتصال به سرور برقرار نشد، داده‌های نمونه نمایش داده
+        می‌شود.
+      </div>
+
+      <div class="controls">
+        <div class="ctrl">
+          <label>بازه زمانی</label>
+          <select id="periodSel" onchange="render()">
+            <option value="all">همه زمان‌ها</option>
+            <option value="day">امروز</option>
+            <option value="week">۷ روز اخیر</option>
+            <option value="month">۳۰ روز اخیر</option>
+            <option value="year">یک سال اخیر</option>
+          </select>
+        </div>
+        <div class="spacer"></div>
+        <button class="btn ghost" onclick="exportCSV()">⬇ خروجی CSV</button>
+        <button class="btn" onclick="window.print()">🖨 چاپ گزارش</button>
+      </div>
+
+      <div class="kpi-grid" id="kpiGrid"></div>
+
+      <!-- COMMISSION CHART -->
+      <div class="panel">
+        <div class="panel-title">📈 روند درآمد کمیسیون سانس‌چی</div>
+        <div class="panel-sub">مجموع کمیسیون محقق‌شده به تفکیک روز</div>
+        <div class="chart-wrap">
+          <canvas id="commChart" height="220"></canvas>
+        </div>
+      </div>
+
+      <!-- PER-PITCH BREAKDOWN -->
+      <div class="panel">
+        <div class="panel-title">🏟️ تفکیک مالی به ازای هر زمین</div>
+        <div class="panel-sub">
+          سهم کمیسیون سانس‌چی و سهم هر صاحب زمین از رزروهای پرداخت‌شده.
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>زمین</th>
+                <th>رزرو پرداختی</th>
+                <th>گردش مالی</th>
+                <th>کمیسیون سانس‌چی</th>
+                <th>سهم صاحب زمین</th>
+                <th>میانگین کمیسیون</th>
+              </tr>
+            </thead>
+            <tbody id="pitchBody"></tbody>
+            <tfoot id="pitchFoot"></tfoot>
+          </table>
+        </div>
+      </div>
+
+      <!-- SETTLEMENT PIPELINE -->
+      <div class="panel">
+        <div class="panel-title">🔄 خط لولهٔ تسویه‌ها</div>
+        <div class="panel-sub">
+          وضعیت تعهدات مالی سانس‌چی به صاحبان زمین، به تفکیک مرحله.
+        </div>
+        <div class="pipeline" id="pipeline"></div>
+      </div>
+
+      <!-- RECENT SETTLEMENTS -->
+      <div class="panel">
+        <div class="panel-title">🧾 آخرین تسویه‌ها</div>
+        <div class="panel-sub">جدیدترین تسویه‌های ثبت‌شده با صاحبان زمین.</div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>تاریخ</th>
+                <th>صاحب زمین</th>
+                <th>زمین</th>
+                <th>گردش</th>
+                <th>کمیسیون</th>
+                <th>سهم اونر</th>
+                <th>وضعیت</th>
+              </tr>
+            </thead>
+            <tbody id="settleBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="note">
+        💚 همهٔ ارقام مستقیماً از تراکنش‌ها و تسویه‌های واقعی پلتفرم محاسبه
+        می‌شوند.
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="../assets/js/admin-finance.js"></script>
+  </body>
+</html>
